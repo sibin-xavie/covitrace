@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 /** 
 * 
 * @author Sibin 
@@ -13,7 +15,7 @@ import javax.persistence.Table;
 */
 @Entity
 @Table(name="state_info")
-public class StateModel {
+public @Data class StateModel {
 	@Id
 	@GeneratedValue
 	@Column(name="state_id")

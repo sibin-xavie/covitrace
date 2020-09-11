@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 /** 
 * 
 * @author Sibin 
@@ -15,7 +17,7 @@ import javax.persistence.Table;
 */
 @Entity
 @Table(name = "patient_medication")
-public class PatientMedictnModel {
+public @Data class PatientMedictnModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "pat_med_id")

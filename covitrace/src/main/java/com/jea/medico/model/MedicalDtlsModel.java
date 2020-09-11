@@ -12,9 +12,11 @@ import javax.persistence.Table;
 * @author Sibin 
 * @since 11 sep 2020 6.20 PM
 */
+
+import lombok.Data;
 @Entity
 @Table(name = "medical_details")
-public class MedicalDtlsModel {
+public @Data class MedicalDtlsModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "medical_id")

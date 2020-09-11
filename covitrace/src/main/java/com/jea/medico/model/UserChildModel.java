@@ -8,6 +8,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 /** 
 * 
 * @author Sibin 
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="user_child")
-public class UserChildModel {
+public @Data class UserChildModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "user_child_id")

@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import lombok.Data;
 /** 
 * 
 * @author Sibin 
@@ -14,7 +16,7 @@ import javax.persistence.Table;
 */
 @Entity
 @Table(name="manager_details")
-public class ManagerDetailsModel {
+public @Data class ManagerDetailsModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "manager_id")

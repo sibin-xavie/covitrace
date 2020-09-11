@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 /** 
 * 
 * @author Sibin 
@@ -13,7 +15,7 @@ import javax.persistence.Table;
 */
 @Entity
 @Table(name = "config_info")
-public class ConfigModel {
+public @Data class ConfigModel {
 	@Id
 	@GeneratedValue
 	@Column(name="config_id")
