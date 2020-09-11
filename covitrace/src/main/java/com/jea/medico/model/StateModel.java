@@ -17,16 +17,16 @@ public class StateModel {
 	@Id
 	@GeneratedValue
 	@Column(name="state_id")
-	public int stateId;
+	private int stateId;
 	@Column(name="state",length = 35 ,nullable = false)
-	public String stateName;
+	private String stateName;
 	@Column(name="district" ,length = 80 ,nullable = false)
-	public String districtName;
+	private String districtName;
 	@Column(name="taluk" ,length = 70 , unique = true,nullable = false)
-	public String talukName; 
+	private String talukName; 
 	@Column(name="country" ,length = 40 ,nullable = false)
-	public String countryName; 
+	private String countryName; 
 	@Column(name="iso_code" ,length = 3 , unique = true,nullable = false)
-	public String CountryISOCode; 
+	private String CountryISOCode; 
 
 }

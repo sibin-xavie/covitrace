@@ -19,17 +19,17 @@ public class PatientMedictnModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "pat_med_id")
-	public int patMedId;
+	private int patMedId;
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	public int userId; 
+	private int userId; 
 	@Column(name = "med_name", length = 100,nullable = false)
-	public String medicineName;
+	private String medicineName;
 	@Column(name = "med_type", length = 50,nullable = false)
-	public String medicineType;
+	private String medicineType;
 	@Column(name = "severity", length = 3,nullable = false)
-	public int medsverity;
+	private int medsverity;
 	@Column(name = "dosage", length = 3,nullable = false)
-	public String medDosage;
+	private String medDosage;
 	
 }

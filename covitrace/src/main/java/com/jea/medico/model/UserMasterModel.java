@@ -18,15 +18,15 @@ public class UserMasterModel {
 	@Id
 	@GeneratedValue
 	@Column(name="user_id")
-	public int userId;
+	private int userId;
 	
 	@OneToOne
 	@JoinColumn(name = "role_id")
-	public int roleId;
+	private int roleId;
 	@Column(name = "username",length = 150,nullable = false, unique = true)
-	public String username;
+	private String username;
 	@Column(name = "password",length = 200,nullable = false, unique = true)
-	public String userPassword;
+	private String userPassword;
 	
 	
 

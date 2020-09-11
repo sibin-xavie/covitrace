@@ -18,8 +18,8 @@ public class RoleModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "role_id" )
-	public int roleId;
+	private int roleId;
 	@Column(name = "role" ,length = 24, unique = true ,nullable = false)
-	public String role;
+	private String role;
 
 }

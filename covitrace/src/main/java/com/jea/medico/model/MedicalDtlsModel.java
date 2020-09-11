@@ -18,14 +18,14 @@ public class MedicalDtlsModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "medical_id")
-	public int medicalDtlsId;
+	private int medicalDtlsId;
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	public int userId; 
+	private int userId; 
 	@Column(name = "covid_tested", length = 1,nullable = false)
-	public boolean isCovedTested;
+	private boolean isCovedTested;
 	@Column(name = "quaren_stat", length = 8,nullable = false)
-	public String patQuarenStats;
+	private String patQuarenStats;
 
 
 }

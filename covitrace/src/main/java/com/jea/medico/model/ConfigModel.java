@@ -17,10 +17,10 @@ public class ConfigModel {
 	@Id
 	@GeneratedValue
 	@Column(name="config_id")
-	public int configId;
+	private int configId;
 	
 	@Column(name="key" , length = 40, unique = true, nullable = false)
-	public String key;
+	private String key;
 	
 	
 

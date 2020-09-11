@@ -18,20 +18,20 @@ public class ManagerDetailsModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "manager_id")
-	public int managerId;
+	private int managerId;
 	@OneToOne
 	@JoinColumn(name = "role_id")
-	public int userRoleId; 
+	private int userRoleId; 
 	@Column(name = "desination", length = 20,nullable = false)
-	public String mgrDesignation;
+	private String mgrDesignation;
 	@Column(name = "department", length = 20,nullable = false)
-	public String mgrDepartment;
+	private String mgrDepartment;
 	@Column(name = "ward_no", length = 20,nullable = false)
-	public int mgrWardNo;
+	private int mgrWardNo;
 	@Column(name = "specialisation", length = 30,nullable = false)
-	public String mgrSpcltn;
+	private String mgrSpcltn;
 	@Column(name = "institution", length = 100,nullable = false)
-	public String mgrInstutn;
+	private String mgrInstutn;
 	
 	
 }

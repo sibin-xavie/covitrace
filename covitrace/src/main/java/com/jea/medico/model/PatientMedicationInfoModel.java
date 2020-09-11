@@ -19,17 +19,17 @@ public class PatientMedicationInfoModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "med_id")
-	public int medicineId;
+	private int medicineId;
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	public int userId; 
+	private int userId; 
 	@OneToOne
 	@JoinColumn(name = "pat_med_id")
-	public int patMedicalId; 
+	private int patMedicalId; 
 	@Column(name = "quaren_start_date", length = 10,nullable = false)
-	public boolean quarenStartDate;
+	private boolean quarenStartDate;
 	@Column(name = "expected_end_date", length = 10,nullable = false)
-	public String expectedEndDate;
+	private String expectedEndDate;
 	@Column(name = "progress", length = 3,nullable = false)
-	public String patProgress;
+	private String patProgress;
 }

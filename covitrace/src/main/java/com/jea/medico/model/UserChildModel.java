@@ -20,32 +20,32 @@ public class UserChildModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "user_child_id")
-	public int userChildId;
+	private int userChildId;
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	public int userId; 
+	private int userId; 
 	@Column(name = "f_name", length = 18,nullable = false)
-	public String userFirstName;
+	private String userFirstName;
 	@Column(name = "l_name", length = 18,nullable = false)
-	public String userLastName;
+	private String userLastName;
 	@Column(name = "address", length = 150,nullable = false)
-	public String userAddress;
+	private String userAddress;
 	@Column(name = "from_address", length = 150,nullable = false)
-	public String userFromAddress;
+	private String userFromAddress;
 	@Column(name = "to_address", length = 150,nullable = false)
-	public String userToAddress;
+	private String userToAddress;
 	@Column(name = "state", length = 30,nullable = false)
-	public String userState;
+	private String userState;
 	@Column(name = "city", length = 40,nullable = false)
-	public String userCity;
+	private String userCity;
 	@Column(name = "village", length = 50,nullable = false)
-	public String userVillage;
+	private String userVillage;
 	@Column(name = "taluk", length = 50,nullable = false)
-	public String userTaluk;
+	private String userTaluk;
 	@Column(name = "email", length = 50,nullable = false)
-	public String userEmail;
+	private String userEmail;
 	@Column(name = "isolated_in", length = 50,nullable = false)
-	public boolean userIsolatedStatus;
+	private boolean userIsolatedStatus;
 	
 	
 	
