@@ -21,7 +21,6 @@ public @Data class UserMasterModel {
 	@GeneratedValue
 	@Column(name="user_id")
 	private int userId;
-	
 	@OneToOne
 	@JoinColumn(name = "role_id")
 	private int roleId;
