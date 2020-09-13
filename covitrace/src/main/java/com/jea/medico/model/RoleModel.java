@@ -1,5 +1,11 @@
 package com.jea.medico.model;
 
+/** 
+* 
+* @author Sibin 
+* @since 11 sep 2020 
+*/
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
