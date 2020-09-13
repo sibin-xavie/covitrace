@@ -25,6 +25,14 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
+
+
+/**
+*
+* @author sibin
+* @since 13 sep 2020 12.05 PM
+*/ 
+
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
