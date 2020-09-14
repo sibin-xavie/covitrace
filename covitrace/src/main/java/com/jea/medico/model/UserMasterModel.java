@@ -1,5 +1,7 @@
 package com.jea.medico.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,6 +30,8 @@ public @Data class UserMasterModel {
 	private String username;
 	@Column(name = "password",length = 200,nullable = false, unique = true)
 	private String userPassword;
+	@Column(name = "user_log",length = 200,nullable = false, unique = true)
+	private Date userLastLog;
 	
 	
 

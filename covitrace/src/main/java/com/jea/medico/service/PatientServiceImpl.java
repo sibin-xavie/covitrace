@@ -1,6 +1,7 @@
 package com.jea.medico.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -9,6 +10,7 @@ import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
+import com.jea.medico.repository.PatientDtlsRepository;
 import com.jea.medico.repository.StateRepository;
 /** 
 * 
@@ -18,10 +20,17 @@ import com.jea.medico.repository.StateRepository;
 public class PatientServiceImpl implements PatientService{
 
 	StateRepository stateRepo;
+	PatientDtlsRepository patRepo;
+	
 	
 	 @Autowired
      public PatientServiceImpl(StateRepository stateRepo) {
          this.stateRepo = stateRepo;
+     }
+	 
+	 @Autowired
+     public PatientServiceImpl(PatientDtlsRepository patRepo) {
+         this.patRepo = patRepo;
      }
 
 	@Override
@@ -30,44 +39,39 @@ public class PatientServiceImpl implements PatientService{
 		return stateRepo.findAll();
 	}
 
+	@Override
+	public List<UserMasterModel> authenticateUserService(String username, String password) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<UserChildModel> getStPatientListService(int userId) {
+		return patRepo.findById(userId);
+	}
+
+	@Override
+	public List<UserMasterModel> getUserLastLogService(int userId) {
 	
+		return null;
+	}
 
 	@Override
-	public List<UserMasterModel> authenticateUserService() {
+	public List<UserChildModel> updatePatientService(int userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<UserChildModel> getStPatientListService() {
+	public List<MedicalDtlsModel> retrivePatMedQstHistService(int userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<UserMasterModel> getUserLastLogService() {
+	public List<MedicalDtlsModel> getPatHealthDataService(int userId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	@Override
-	public List<UserChildModel> updatePatientService() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<MedicalDtlsModel> retrivePatMedQstHistService() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<MedicalDtlsModel> getPatHealthDataService() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	
 }

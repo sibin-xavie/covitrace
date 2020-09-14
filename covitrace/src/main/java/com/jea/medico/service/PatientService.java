@@ -2,6 +2,7 @@ package com.jea.medico.service;
 
 
 import java.util.List;
+import java.util.Optional;
 
 import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
@@ -14,11 +15,11 @@ import com.jea.medico.model.UserMasterModel;
 */
 public interface PatientService {
 	public List<StateModel> getStateListService() ;
-	public List<UserMasterModel> authenticateUserService();
-	public List<UserChildModel> getStPatientListService();
-	public List<UserMasterModel> getUserLastLogService();
-	public List<UserChildModel> updatePatientService();
-	public List<MedicalDtlsModel> retrivePatMedQstHistService();
-	public List<MedicalDtlsModel> getPatHealthDataService();
+	public List<UserMasterModel> authenticateUserService(String username, String password);
+	public Optional<UserChildModel> getStPatientListService(int userId);
+	public List<UserMasterModel> getUserLastLogService(int userId);
+	public List<UserChildModel> updatePatientService(int userId);
+	public List<MedicalDtlsModel> retrivePatMedQstHistService(int userId);
+	public List<MedicalDtlsModel> getPatHealthDataService(int userId);
 	
 }

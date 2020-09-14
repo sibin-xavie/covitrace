@@ -1,5 +1,7 @@
 package com.jea.medico.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,9 +31,9 @@ public @Data class PatientMedicationInfoModel {
 	@JoinColumn(name = "pat_med_id")
 	private int patMedicalId; 
 	@Column(name = "quaren_start_date", length = 10,nullable = false)
-	private boolean quarenStartDate;
+	private Date quarenStartDate;
 	@Column(name = "expected_end_date", length = 10,nullable = false)
-	private String expectedEndDate;
+	private Date expectedEndDate;
 	@Column(name = "progress", length = 3,nullable = false)
 	private String patProgress;
 }
