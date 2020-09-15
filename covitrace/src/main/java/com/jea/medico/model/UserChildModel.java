@@ -49,6 +49,8 @@ public @Data class UserChildModel {
 	@Column(name = "isolated_in", length = 50,nullable = false)
 	private boolean userIsolatedStatus;
 	
+	/*Risk category*/
+	
 	
 	
 }

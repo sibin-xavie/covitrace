@@ -33,5 +33,16 @@ public @Data class PatientMedictnModel {
 	private int medsverity;
 	@Column(name = "dosage", length = 3,nullable = false)
 	private String medDosage;
+	@Column(name = "blood_sugar_count",nullable = false)
+	private boolean bloodSugarCount;
+	@Column(name = "temp_count", length = 3,nullable = false)
+	private int temperatureCount;
+	@Column(name = "heart_rate_count", length = 3,nullable = false)
+	private int heartRateCount;
+	@Column(name = "blood_pressure_count_sys", length = 3,nullable = false)
+	private int bloodPressureCountSys;
+	@Column(name = "blood_pressure_count_dia", length = 3,nullable = false)
+	private int bloodPressureCountDia;
+	
 	
 }

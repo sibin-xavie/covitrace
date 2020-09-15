@@ -28,6 +28,9 @@ public @Data class MedicalDtlsModel {
 	private boolean isCovedTested;
 	@Column(name = "quaren_stat", length = 8,nullable = false)
 	private String patQuarenStats;
+	
+	
+
 
 
 }
