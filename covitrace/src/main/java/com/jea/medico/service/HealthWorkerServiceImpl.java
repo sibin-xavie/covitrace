@@ -12,24 +12,26 @@ import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.repository.PatientDtlsRepository;
 import com.jea.medico.repository.StateRepository;
+import com.jea.medico.repository.UserChildRepository;
 /** 
 * 
 * @author Sibin 
 * @since 13 sep 2020 9.30 PM
 */
-public class PatientServiceImpl implements PatientService{
+public class HealthWorkerServiceImpl implements HealthWorkerService{
 
 	StateRepository stateRepo;
 	PatientDtlsRepository patRepo;
+	UserChildRepository userChildRepo;
 	
 	
 	 @Autowired
-     public PatientServiceImpl(StateRepository stateRepo) {
+     public HealthWorkerServiceImpl(StateRepository stateRepo) {
          this.stateRepo = stateRepo;
      }
 	 
 	 @Autowired
-     public PatientServiceImpl(PatientDtlsRepository patRepo) {
+     public HealthWorkerServiceImpl(PatientDtlsRepository patRepo) {
          this.patRepo = patRepo;
      }
 
@@ -46,8 +48,8 @@ public class PatientServiceImpl implements PatientService{
 	}
 
 	@Override
-	public Optional<UserChildModel> getStPatientListService(int userId) {
-		return patRepo.findById(userId);
+	public List<UserChildModel> getStPatientListService() {
+		return userChildRepo.findAll();
 	}
 
 	@Override
