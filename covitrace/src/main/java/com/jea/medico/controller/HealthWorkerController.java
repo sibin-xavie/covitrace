@@ -122,7 +122,11 @@ HealthWorkerService healthWkrService;
 			/** 
 			* 
 			* @author Sibin 
+<<<<<<< HEAD
 			* @since 15 sep 2020 16.06
+=======
+			* @since 15 sep 2020 16.05
+>>>>>>> 35f94504d695e1b228dfc01c6c4a09fbe6ca543e
 			* @return {@link MedicalDtlsModel}
 			* @implSpec Method returns the patient's medical History from  MedicalDtlsModel 
 			*/

@@ -43,6 +43,9 @@ public @Data class PatientMedictnModel {
 	private int bloodPressureCountSys;
 	@Column(name = "blood_pressure_count_dia", length = 3,nullable = false)
 	private int bloodPressureCountDia;
+<<<<<<< HEAD
 	
+=======
+>>>>>>> 35f94504d695e1b228dfc01c6c4a09fbe6ca543e
 	
 }
