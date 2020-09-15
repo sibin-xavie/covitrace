@@ -10,9 +10,11 @@ import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
+import com.jea.medico.repository.MedicalDtlsRepository;
 import com.jea.medico.repository.PatientDtlsRepository;
 import com.jea.medico.repository.StateRepository;
 import com.jea.medico.repository.UserChildRepository;
+import com.jea.medico.repository.UserMasterRepository;
 /** 
 * 
 * @author Sibin 
@@ -23,6 +25,8 @@ public class HealthWorkerServiceImpl implements HealthWorkerService{
 	StateRepository stateRepo;
 	PatientDtlsRepository patRepo;
 	UserChildRepository userChildRepo;
+	UserMasterRepository userMasterRepo;
+	MedicalDtlsRepository medDtlsRepo;
 	
 	
 	 @Autowired
@@ -43,8 +47,9 @@ public class HealthWorkerServiceImpl implements HealthWorkerService{
 
 	@Override
 	public List<UserMasterModel> authenticateUserService(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<UserMasterModel> userMasterModel = userMasterRepo.findByUsernameAndUserPassword(username, password);
+		return userMasterModel;
 	}
 
 	@Override
@@ -59,21 +64,27 @@ public class HealthWorkerServiceImpl implements HealthWorkerService{
 	}
 
 	@Override
-	public List<UserChildModel> updatePatientService(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updatePatientService(boolean isolatedStatus, int userId) {
+		
+		return userChildRepo.updatePatientDetails(isolatedStatus, userId);
 	}
 
 	@Override
-	public List<MedicalDtlsModel> retrivePatMedQstHistService(int userId) {
-		// TODO Auto-generated method stub
-		return null;
+	public MedicalDtlsModel retrivePatMedQstHistService(int medicalDtlsId) {
+		
+		return medDtlsRepo.findByMedicalDtlsIdAndUserId(medicalDtlsId);
 	}
 
 	@Override
 	public List<MedicalDtlsModel> getPatHealthDataService(int userId) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel) {
+		
+		return medDtlsRepo.save(medicalDltlsModel);
 	}
 
 }

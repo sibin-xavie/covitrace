@@ -52,11 +52,11 @@ public interface HealthWorkerService {
 	/** 
 	* @author Sibin 
 	* @since 14 sep 2020 
-	* @return {@link List}
+	* @return {@link Integer}
 	* @implSpec update the patient in userChildModel
 	* @param Integer userId 
 	*/
-	public List<UserChildModel> updatePatientService(int userId);
+	public int updatePatientService(boolean isolatedStatus, int userId);
 	/** 
 	* @author Sibin 
 	* @since 14 sep 2020 
@@ -64,14 +64,23 @@ public interface HealthWorkerService {
 	* @implSpec update the patient Medical history in  PatientMedictnModel
 	* @param Integer userId 
 	*/
-	public List<MedicalDtlsModel> retrivePatMedQstHistService(int userId);
+	public MedicalDtlsModel retrivePatMedQstHistService(int userId);
 	/** 
 	* @author Sibin 
 	* @since 14 sep 2020 
 	* @return {@link List}
-	* @implSpec update the patient Medical history in  PatientMedictnModel join PatientMedicationInfoModel
+	* @implSpec retrieve the patient Medical history in  PatientMedictnModel join PatientMedicationInfoModel
 	* @param Integer userId 
 	*/
 	public List<MedicalDtlsModel> getPatHealthDataService(int userId);
+	/** 
+	* @author Sibin 
+	* @since 14 sep 2020 
+	* @return {@link MedicalDtlsModel}
+	* @implSpec add the patient Medical history
+	* @param Integer userId 
+	*/
+	
+	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel);
 	
 }
