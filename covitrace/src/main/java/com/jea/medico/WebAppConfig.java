@@ -37,7 +37,7 @@ import org.springframework.web.servlet.view.UrlBasedViewResolver;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan("com.jea")
+@ComponentScan("com.jea.medico")
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories("com.jea.medico.repository")
 public class WebAppConfig {
@@ -68,7 +68,7 @@ public class WebAppConfig {
 	    @Bean
 	    public SessionFactory getSessionFactory(DataSource source) {
 	        LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(source);
-	        builder.scanPackages("com.jea.medico.models");
+	        builder.scanPackages("com.jea.medico.model");
 	        builder.addProperties(hibProperties());
 	        SessionFactory sessionFactory = builder.buildSessionFactory();
 	        return sessionFactory;
