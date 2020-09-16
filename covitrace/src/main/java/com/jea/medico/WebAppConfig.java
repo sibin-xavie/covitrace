@@ -22,6 +22,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -45,13 +46,13 @@ public class WebAppConfig {
 	private static final String PROPERTY_NAME_DATABASE_PASSWORD = "db.password";
 	private static final String PROPERTY_NAME_DATABASE_URL = "db.url";
 	private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
-
 	private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
 	private static final String PROPERTY_NAME_HIBERNATE_SHOW_SQL = "hibernate.show_sql";
+	private static final String PROPERTY_NAME_HIBERNATE_UPDATE = "hibernate.hbm2ddl.auto";
 	private static final String PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN = "entitymanager.packages.to.scan";
 
 	@Resource
-	private Environment env;
+	 Environment env;
 
 	@Bean
 	public DataSource dataSource() {
@@ -60,11 +61,20 @@ public class WebAppConfig {
 		dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
 		dataSource.setUsername(env.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
 		dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
-
 		return dataSource;
 	}
 
-	
+	 @Autowired
+	    @Bean
+	    public SessionFactory getSessionFactory(DataSource source) {
+	        LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(source);
+	        builder.scanPackages("com.jea.medico.models");
+	        builder.addProperties(hibProperties());
+	        SessionFactory sessionFactory = builder.buildSessionFactory();
+	        return sessionFactory;
+
+	    } 
+	 
 	@Bean
 	public JpaTransactionManager transactionManager() {
 		JpaTransactionManager transactionManager = new JpaTransactionManager();
@@ -81,7 +91,6 @@ public class WebAppConfig {
 		entityManagerFactoryBean.setPackagesToScan(env.getRequiredProperty(PROPERTY_NAME_ENTITYMANAGER_PACKAGES_TO_SCAN));
 		
 		entityManagerFactoryBean.setJpaProperties(hibProperties());
-		
 		return entityManagerFactoryBean;
 	}
 	
@@ -95,38 +104,30 @@ public class WebAppConfig {
 
 	private Properties hibProperties() {
 		Properties properties = new Properties();
-		properties.put(PROPERTY_NAME_HIBERNATE_DIALECT,	env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
-		properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
-		return properties;
+        properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
+        properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
+        properties.put(PROPERTY_NAME_HIBERNATE_UPDATE, env.getProperty(PROPERTY_NAME_HIBERNATE_UPDATE));
+        return properties;
 	}
 
 
 
-	@Bean
-	public UrlBasedViewResolver setupViewResolver() {
-		UrlBasedViewResolver resolver = new UrlBasedViewResolver();
+	@Bean(name = "resolve")
+	public InternalResourceViewResolver setupViewResolver() {
+		 InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/pages/");
 		resolver.setSuffix(".jsp");
-		resolver.setViewClass(JstlView.class);
+		//resolver.setViewClass(JstlView.class);
 		return resolver;
 	}
 	
-	@Bean
+	/*@Bean
 	public ResourceBundleMessageSource messageSource() {
 		ResourceBundleMessageSource source = new ResourceBundleMessageSource();
 		source.setBasename(env.getRequiredProperty("message.source.basename"));
 		source.setUseCodeAsDefaultMessage(true);
 		return source;
-	}
-    @Autowired
-    @Bean
-    public SessionFactory getSessionFactory(DataSource source) {
-        LocalSessionFactoryBuilder builder = new LocalSessionFactoryBuilder(source);
-        builder.scanPackages("com.medico.models");
-        builder.addProperties(hibProperties());
-        SessionFactory sessionFactory = builder.buildSessionFactory();
-        return sessionFactory;
-
-    }
+	}*/
+   
 
 }
