@@ -23,9 +23,7 @@ public @Data class UserChildModel {
 	@GeneratedValue
 	@Column(name = "user_child_id")
 	private int userChildId;
-	@OneToOne
-	@JoinColumn(name = "user_id")
-	private int userId; 
+	
 	@Column(name = "f_name", length = 18,nullable = false)
 	private String userFirstName;
 	@Column(name = "l_name", length = 18,nullable = false)
@@ -49,6 +47,11 @@ public @Data class UserChildModel {
 	@Column(name = "isolated_in", length = 50,nullable = false)
 	private boolean userIsolatedStatus;
 	
+	
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private UserMasterModel userId; 
 	/*Risk category*/
 	
 	

@@ -21,9 +21,7 @@ public @Data class ManagerDetailsModel {
 	@GeneratedValue
 	@Column(name = "manager_id")
 	private int managerId;
-	@OneToOne
-	@JoinColumn(name = "role_id")
-	private int userRoleId; 
+	
 	@Column(name = "desination", length = 20,nullable = false)
 	private String mgrDesignation;
 	@Column(name = "department", length = 20,nullable = false)
@@ -34,6 +32,11 @@ public @Data class ManagerDetailsModel {
 	private String mgrSpcltn;
 	@Column(name = "institution", length = 100,nullable = false)
 	private String mgrInstutn;
+	
+	
+	@OneToOne
+	@JoinColumn(name = "role_id")
+	private RoleModel userRoleId; 
 	
 	
 }

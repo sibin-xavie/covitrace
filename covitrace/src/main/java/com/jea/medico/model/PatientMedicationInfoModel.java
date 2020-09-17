@@ -17,6 +17,7 @@ import lombok.Data;
 * @author Sibin 
 * @since 11 sep 2020 6.20 PM
 */
+
 @Entity
 @Table(name = "medication_info")
 public @Data class PatientMedicationInfoModel {
@@ -24,16 +25,18 @@ public @Data class PatientMedicationInfoModel {
 	@GeneratedValue
 	@Column(name = "med_id")
 	private int medicineId;
-	@OneToOne
-	@JoinColumn(name = "user_id")
-	private int userId; 
-	@OneToOne
-	@JoinColumn(name = "pat_med_id")
-	private int patMedicalId; 
+	
 	@Column(name = "quaren_start_date", length = 10,nullable = false)
 	private Date quarenStartDate;
 	@Column(name = "expected_end_date", length = 10,nullable = false)
 	private Date expectedEndDate;
 	@Column(name = "progress", length = 3,nullable = false)
 	private String patProgress;
+	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private UserMasterModel userId; 
+	@OneToOne
+	@JoinColumn(name = "pat_med_id")
+	private PatientMedictnModel patMedId; 
 }

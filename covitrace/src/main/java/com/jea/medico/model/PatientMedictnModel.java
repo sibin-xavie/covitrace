@@ -22,9 +22,7 @@ public @Data class PatientMedictnModel {
 	@GeneratedValue
 	@Column(name = "pat_med_id")
 	private int patMedId;
-	@OneToOne
-	@JoinColumn(name = "user_id")
-	private int userId; 
+	
 	@Column(name = "med_name", length = 100,nullable = false)
 	private String medicineName;
 	@Column(name = "med_type", length = 50,nullable = false)
@@ -45,4 +43,7 @@ public @Data class PatientMedictnModel {
 	private int bloodPressureCountDia;
 
 	
+	@OneToOne
+	@JoinColumn(name = "user_id")
+	private UserMasterModel userId; 
 }

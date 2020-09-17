@@ -2,26 +2,29 @@ package com.jea.medico;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
-/**
-*
-* @author sibin
-* @since 13 sep 2020 1.45 PM
-*/
-public class Initializer implements WebApplicationInitializer {
-	private static final String DISPATCHER_SERVLET_NAME = "MEDICAL_SEVLET";
 
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		  AnnotationConfigWebApplicationContext registerApplication = new AnnotationConfigWebApplicationContext();
-	        registerApplication.register(WebAppConfig.class);
-	        ServletRegistration.Dynamic dispatcher = servletContext.addServlet(DISPATCHER_SERVLET_NAME, new DispatcherServlet(registerApplication));
-	        dispatcher.setLoadOnStartup(1);
-	        dispatcher.addMapping("/");
-		
+public class Initializer implements WebApplicationInitializer {
+
+	private static final String DISPATCHER_SERVLET_NAME = "dispatcher";
+
+	public void onStartup(ServletContext servletContext)
+			throws ServletException {
+		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+		ctx.register(WebAppConfig.class);
+		servletContext.addListener(new ContextLoaderListener(ctx));
+
+		ctx.setServletContext(servletContext);
+
+		Dynamic servlet = servletContext.addServlet(DISPATCHER_SERVLET_NAME,
+				new DispatcherServlet(ctx));
+		servlet.addMapping("/");
+		servlet.setLoadOnStartup(1);
 	}
+
 }

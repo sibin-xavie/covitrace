@@ -25,7 +25,7 @@ public @Data class UserMasterModel {
 	private int userId;
 	@OneToOne
 	@JoinColumn(name = "role_id")
-	private int roleId;
+	private RoleModel roleId;
 	@Column(name = "username",length = 150,nullable = false, unique = true)
 	private String username;
 	@Column(name = "password",length = 200,nullable = false, unique = true)

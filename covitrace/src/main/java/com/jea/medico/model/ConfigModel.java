@@ -20,7 +20,6 @@ public @Data class ConfigModel {
 	@GeneratedValue
 	@Column(name="config_id")
 	private int configId;
-	
 	@Column(name="key" , length = 40, unique = true, nullable = false)
 	private String key;
 	

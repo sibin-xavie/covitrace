@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import com.amazonaws.services.ec2.model.State;
 import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.UserChildModel;
@@ -15,29 +17,24 @@ import com.jea.medico.repository.PatientDtlsRepository;
 import com.jea.medico.repository.StateRepository;
 import com.jea.medico.repository.UserChildRepository;
 import com.jea.medico.repository.UserMasterRepository;
-/** 
-* 
-* @author Sibin 
-* @since 13 sep 2020 9.30 PM
-*/
-public class HealthWorkerServiceImpl implements HealthWorkerService{
 
+/**
+ * 
+ * @author Sibin
+ * @since 13 sep 2020 9.30 PM
+ */
+@Service
+public class HealthWorkerServiceImpl implements HealthWorkerService {
+	@Autowired
 	StateRepository stateRepo;
+	@Autowired
 	PatientDtlsRepository patRepo;
+	@Autowired
 	UserChildRepository userChildRepo;
+	@Autowired
 	UserMasterRepository userMasterRepo;
+	@Autowired
 	MedicalDtlsRepository medDtlsRepo;
-	
-	
-	 @Autowired
-     public HealthWorkerServiceImpl(StateRepository stateRepo) {
-         this.stateRepo = stateRepo;
-     }
-	 
-	 @Autowired
-     public HealthWorkerServiceImpl(PatientDtlsRepository patRepo) {
-         this.patRepo = patRepo;
-     }
 
 	@Override
 	public List<StateModel> getStateListService() {
@@ -47,7 +44,7 @@ public class HealthWorkerServiceImpl implements HealthWorkerService{
 
 	@Override
 	public List<UserMasterModel> authenticateUserService(String username, String password) {
-		
+
 		List<UserMasterModel> userMasterModel = userMasterRepo.findByUsernameAndUserPassword(username, password);
 		return userMasterModel;
 	}
@@ -59,19 +56,20 @@ public class HealthWorkerServiceImpl implements HealthWorkerService{
 
 	@Override
 	public List<UserMasterModel> getUserLastLogService(int userId) {
-	
+
 		return null;
 	}
 
 	@Override
+	@Transactional
 	public int updatePatientService(boolean isolatedStatus, int userId) {
-		
+
 		return userChildRepo.updatePatientDetails(isolatedStatus, userId);
 	}
 
 	@Override
 	public MedicalDtlsModel retrivePatMedQstHistService(int medicalDtlsId) {
-		
+
 		return medDtlsRepo.findByMedicalDtlsIdAndUserId(medicalDtlsId);
 	}
 
@@ -82,8 +80,9 @@ public class HealthWorkerServiceImpl implements HealthWorkerService{
 	}
 
 	@Override
+	@Transactional
 	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel) {
-		
+
 		return medDtlsRepo.save(medicalDltlsModel);
 	}
 
