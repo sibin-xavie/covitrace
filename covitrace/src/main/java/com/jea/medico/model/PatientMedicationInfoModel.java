@@ -19,8 +19,9 @@ import lombok.Data;
 */
 
 @Entity
+@Data
 @Table(name = "medication_info")
-public @Data class PatientMedicationInfoModel {
+public  class PatientMedicationInfoModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "med_id")

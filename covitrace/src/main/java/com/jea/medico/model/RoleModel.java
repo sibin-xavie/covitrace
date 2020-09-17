@@ -18,8 +18,9 @@ import javax.persistence.Table;
 */
 import lombok.Data;
 @Entity
+@Data
 @Table(name = "role_info")
-public @Data class RoleModel {
+public  class RoleModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "role_id" )

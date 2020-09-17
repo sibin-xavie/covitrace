@@ -15,8 +15,9 @@ import lombok.Data;
 * @since 11 sep 2020 3.30 PM
 */
 @Entity
+@Data
 @Table(name="manager_details")
-public @Data class ManagerDetailsModel {
+public  class ManagerDetailsModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "manager_id")

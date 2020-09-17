@@ -17,8 +17,9 @@ import lombok.Data;
 * @since 11 sep 2020 12.15 PM
 */
 @Entity
+@Data
 @Table(name="user_master")
-public @Data class UserMasterModel {
+public  class UserMasterModel {
 	@Id
 	@GeneratedValue
 	@Column(name="user_id")

@@ -15,8 +15,9 @@ import javax.persistence.Table;
 
 import lombok.Data;
 @Entity
+@Data
 @Table(name = "medical_details")
-public @Data class MedicalDtlsModel {
+public  class MedicalDtlsModel {
 	@Id
 	@GeneratedValue
 	@Column(name = "medical_id")

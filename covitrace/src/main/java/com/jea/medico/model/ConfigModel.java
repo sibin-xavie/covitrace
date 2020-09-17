@@ -14,8 +14,9 @@ import lombok.Data;
 * @since 11 sep 2020 3.22 PM
 */
 @Entity
+@Data
 @Table(name = "config_info")
-public @Data class ConfigModel {
+public  class ConfigModel {
 	@Id
 	@GeneratedValue
 	@Column(name="config_id")
