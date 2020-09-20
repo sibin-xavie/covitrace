@@ -60,10 +60,10 @@ public class HealthWorkerController {
 		List<UserMasterModel> getLoginCredList = null;
 
 		
-		/*	getLoginCredList = healthWkrService.authenticateUserService(request.getParameter("USERNAME"),
-					request.getParameter("PASSWORD"));*/
-			getLoginCredList = healthWkrService.authenticateUserService("admin",
-					"admin");
+			getLoginCredList = healthWkrService.authenticateUserService(request.getParameter("USERNAME"),
+					request.getParameter("PASSWORD"));
+//			getLoginCredList = healthWkrService.authenticateUserService("admin",
+//					"admin");
 			System.out.println(((UserMasterModel)getLoginCredList.get(0)).getRoleId().getRoleId());
 			;
 		return getLoginCredList;
