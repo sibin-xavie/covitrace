@@ -1,20 +1,12 @@
 package com.jea.medico.config;
 
-import java.util.Locale;
-
 import javax.annotation.Resource;
 
-import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
-import org.springframework.format.FormatterRegistry;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
@@ -23,13 +15,6 @@ public class SecurityConfiguration implements WebMvcConfigurer {
 
 	@Resource
 	private Environment env;
-
-    @Bean
-    public LocaleResolver localeResolver(){
-      CookieLocaleResolver resolver = new CookieLocaleResolver();
-      resolver.setDefaultLocale(new Locale("is")); // default locale
-      return resolver;
-    }
     
 	@Bean
 	public UrlBasedViewResolver setupViewResolver() {
