@@ -15,6 +15,7 @@ import com.jea.medico.exception.PatientException;
 import com.jea.medico.model.JwtRequest;
 import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
+import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.service.HealthWorkerService;
@@ -31,12 +32,11 @@ public class HealthWorkerRestController {
 	HealthWorkerService healthWkrService;
 
 	@RequestMapping(value = "/patientRegisterService", method = RequestMethod.POST)
-	public List<UserChildModel> patientListService(@RequestBody UserChildModel userDetails) throws PatientException {
-		List<UserChildModel> user = null;
+	public UserChildModel patientListService(@RequestBody User user) throws PatientException {
+		healthWkrService.createUserService(user);
+		System.out.println("Address: " + user.getChild().getUserAddress());
 
-		System.out.println("Address: " + userDetails.getUserAddress());
-
-		return user;
+		return user.getChild();
 	}
 
 

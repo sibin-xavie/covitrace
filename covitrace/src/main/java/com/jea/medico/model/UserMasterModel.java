@@ -29,9 +29,9 @@ public  class UserMasterModel {
 	private RoleModel roleId;
 	@Column(name = "username",length = 150,nullable = false, unique = true)
 	private String username;
-	@Column(name = "password",length = 200,nullable = false, unique = true)
+	@Column(name = "password",length = 200,nullable = false)
 	private String userPassword;
-	@Column(name = "user_log",length = 200,nullable = false, unique = true)
+	@Column(name = "user_log",length = 200,nullable = false, columnDefinition="datetime default CURRENT_TIMESTAMP")
 	private Date userLastLog;
 	
 	

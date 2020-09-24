@@ -31,14 +31,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     CustomAuthenticationProvider customAuthenticationProvider;
-    
-//	@Autowired
-//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		// configure AuthenticationManager so that it knows from where to load
-//		// user for matching credentials
-//		// Use BCryptPasswordEncoder
-//		auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
-//	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
@@ -65,7 +57,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.
                 authorizeRequests()
-	                .antMatchers("/").permitAll()
 	                .antMatchers("/login").permitAll()
 	                .antMatchers("/api/v1/patientRegisterService").permitAll()
 	                .antMatchers("/api/v1/authenticateUserService").permitAll()
@@ -76,21 +67,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .anyRequest()
                 .authenticated()
                 .and().csrf().disable()
-//	                .formLogin()
-//	                .loginPage("/login")
-//	                .loginPage("/")
-//	                .failureUrl("/login?error=true")
-//	                .defaultSuccessUrl("/default")
-//	                .usernameParameter("username")
-//	                .passwordParameter("password")
-//                .and().logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/login").and()
-                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .exceptionHandling();//.authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
+                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
 		// Add a filter to validate the tokens with every request
-		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		//http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 
     }
 

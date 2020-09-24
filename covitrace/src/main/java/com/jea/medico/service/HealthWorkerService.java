@@ -8,6 +8,7 @@ import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.PatientMedicationInfoModel;
 import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
+import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 /** 
@@ -89,4 +90,11 @@ public interface HealthWorkerService {
 	 * @return
 	 */
 	public UserChildModel updateUserService(UserChildModel user);
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public UserChildModel createUserService(User user);
 }

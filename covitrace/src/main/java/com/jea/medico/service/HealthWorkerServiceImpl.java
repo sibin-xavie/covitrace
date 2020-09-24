@@ -1,5 +1,7 @@
 package com.jea.medico.service;
 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
+import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.repository.MedicalDtlsRepository;
@@ -91,5 +94,19 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	public UserChildModel updateUserService(UserChildModel user) {
 
 		return userChildRepo.save(user);
+	}
+	
+	@Override
+	@Transactional
+	public UserChildModel createUserService(User user) {
+		UserMasterModel userMaster = user.getMaster();
+		Date date = new Date(Calendar.getInstance().getTime().getTime());
+		userMaster.setUserLastLog(date);
+		userMaster = userMasterRepo.save(userMaster);
+		
+		UserChildModel userChild = user.getChild();
+		userChild.setUserId(userMaster);
+		
+		return userChildRepo.save(userChild);
 	}
 }
