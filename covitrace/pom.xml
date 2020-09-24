@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>covitrace</groupId>
 	<artifactId>covitrace</artifactId>
-	<packaging>war</packaging>
+	<packaging>jar</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>covitrace</name>
 
@@ -134,4 +134,15 @@
 
 	</dependencies>
 
+    <build>
+        <finalName>covitrace</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            
+        </plugins>
+        
+    </build>
 </project>
