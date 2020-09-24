@@ -83,4 +83,10 @@ public interface HealthWorkerService {
 	
 	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel);
 	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public UserChildModel updateUserService(UserChildModel user);
 }

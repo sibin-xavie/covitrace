@@ -1,4 +1,4 @@
-package com.jea.medico;
+/*package com.jea.medico;
 
 import java.util.Properties;
 
@@ -99,4 +99,4 @@ public class WebAppConfig {
 		return source;
 	}
 
-}
+}*/

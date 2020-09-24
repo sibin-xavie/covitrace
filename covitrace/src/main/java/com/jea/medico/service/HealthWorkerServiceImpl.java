@@ -86,4 +86,10 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 		return medDtlsRepo.save(medicalDltlsModel);
 	}
 
+	@Override
+	@Transactional
+	public UserChildModel updateUserService(UserChildModel user) {
+
+		return userChildRepo.save(user);
+	}
 }

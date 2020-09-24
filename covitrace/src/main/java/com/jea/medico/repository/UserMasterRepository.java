@@ -14,6 +14,6 @@ public interface UserMasterRepository extends JpaRepository<UserMasterModel, Int
 	* @since 15 sep 2020 10.10 AM
 	* @implSpec retrives the list<UserMasterModel> from username and password supplied
 	*/
-	@Query("select u from UserMasterModel u where u.username = ?1 and u.userPassword = ?2")
+	//@Query("select u from UserMasterModel u where u.username = ?1 and u.userPassword = ?2")
 	List<UserMasterModel> findByUsernameAndUserPassword(String username, String userPassword);
 }
