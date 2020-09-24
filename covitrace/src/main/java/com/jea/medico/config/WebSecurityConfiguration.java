@@ -65,8 +65,10 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	                .antMatchers("/admin/**").hasAuthority("ADMIN")
 	                .antMatchers("/user/**").hasAuthority("USER")
                 .anyRequest()
-                .authenticated()
-                .and().csrf().disable()
+                .authenticated().and()
+                .addFilterBefore(jwtRequestFilter,
+                        UsernamePasswordAuthenticationFilter.class)
+                .csrf().disable()
                 .exceptionHandling();//.authenticationEntryPoint(jwtAuthenticationEntryPoint).and()
                 //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         
