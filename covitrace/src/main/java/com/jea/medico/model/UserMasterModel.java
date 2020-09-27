@@ -31,7 +31,7 @@ public  class UserMasterModel {
 	private String username;
 	@Column(name = "password",length = 200,nullable = false)
 	private String userPassword;
-	@Column(name = "user_log",length = 200,nullable = false, columnDefinition="datetime default CURRENT_TIMESTAMP")
+	@Column(name = "user_log",length = 200,nullable = false)
 	private Date userLastLog;
 	
 	

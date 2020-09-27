@@ -2,22 +2,17 @@ package com.jea.medico.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jea.medico.exception.PatientException;
-import com.jea.medico.model.JwtRequest;
-import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
-import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.service.HealthWorkerService;
 
 /**
@@ -50,6 +45,25 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 
-
+	@RequestMapping(value = "/getStateListServices", method = RequestMethod.POST)
+	public List<StateModel> getStateListController() {
+		List<StateModel> allStateList = new ArrayList<StateModel>();
+		
+			allStateList = healthWkrService.getStateListService();
+			System.out.println("sibin:::"+allStateList);
+			
+		
+		return allStateList;
+	}
+	
+	@RequestMapping(value = "/patientListService", method = RequestMethod.POST)
+	public List<UserChildModel> patientListController(){
+		List<UserChildModel> allPatientList = null;
+		
+			allPatientList = healthWkrService.getStPatientListService();
+		
+		
+		return allPatientList;
+	}
 
 }

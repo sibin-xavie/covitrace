@@ -28,7 +28,7 @@ public @Data class StateModel {
 	private String talukName; 
 	@Column(name="country" ,length = 40 ,nullable = false)
 	private String countryName; 
-	@Column(name="iso_code" ,length = 3 , unique = true,nullable = false)
+	@Column(name="iso_code" ,length = 3 ,nullable = false)
 	private String CountryISOCode; 
 
 }
