@@ -20,6 +20,10 @@ import com.jea.medico.service.JwtUserDetailsService;
 import com.jea.medico.config.JwtTokenUtil;
 import com.jea.medico.model.JwtRequest;
 import com.jea.medico.model.JwtResponse;
+import com.jea.medico.model.UserChildModel;
+import com.jea.medico.model.UserMasterModel;
+import com.jea.medico.repository.UserChildRepository;
+import com.jea.medico.repository.UserRepository;
 
 @RestController
 @CrossOrigin
@@ -34,7 +38,13 @@ public class JwtAuthenticationController {
 
 	@Autowired
 	private JwtUserDetailsService userDetailsService;
-
+	
+	@Autowired
+	UserChildRepository userChildRepository;
+	
+	@Autowired
+	UserRepository userRepository;
+	
 	@RequestMapping(value = "/authenticateUserService", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
 
@@ -42,10 +52,21 @@ public class JwtAuthenticationController {
 
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
-
+		
+		
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		
+		UserMasterModel user = userRepository.findByUsername(authenticationRequest.getUsername());
+		System.out.println("authenticationRequest.getUserId():::"+user.getUserId());
+		UserChildModel userChildModel = userChildRepository.findByuserChildId(user.getUserId());
+		
 
-		return ResponseEntity.ok(new JwtResponse(token));
+JwtResponse response = new JwtResponse(token,userChildModel.getUserLat(),userChildModel.getUserLong(),user.getRoleId().getRoleId());
+
+
+
+
+		return ResponseEntity.ok(response);
 	}
 
 	private void authenticate(String username, String password) throws Exception {

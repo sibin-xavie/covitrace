@@ -13,7 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
+import com.jea.medico.repository.UserChildRepository;
 import com.jea.medico.repository.UserRepository;
 
 @Service
@@ -21,6 +23,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -28,7 +31,7 @@ public class JwtUserDetailsService implements UserDetailsService {
 		if (user != null) {
 		    Collection<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
 		    authorities.add(new SimpleGrantedAuthority(user.getRoleId().getRole()));
-
+		
 		    
 			return new User(user.getUsername(), user.getUserPassword(),
 					authorities);
