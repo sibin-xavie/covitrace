@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.jea.medico.exception.PatientException;
+import com.jea.medico.model.MedicalTestModel;
+import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
@@ -33,7 +35,8 @@ public class HealthWorkerRestController {
 
 		return user.getChild();
 	}
-
+	
+	
 
 	@RequestMapping(value = "/updatePatientService", method = RequestMethod.POST)
 	public int updatePatientService(@RequestBody UserChildModel userDetails) {
@@ -45,6 +48,13 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 
+	
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 30 Sep 2020
+	 */
+	
 	@RequestMapping(value = "/getStateListServices", method = RequestMethod.POST)
 	public List<StateModel> getStateListController() {
 		List<StateModel> allStateList = new ArrayList<StateModel>();
@@ -56,6 +66,14 @@ public class HealthWorkerRestController {
 		return allStateList;
 	}
 	
+	
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 30 Sep 2020
+	 */
+	
+	
 	@RequestMapping(value = "/patientListService", method = RequestMethod.POST)
 	public List<UserChildModel> patientListController(){
 		List<UserChildModel> allPatientList = null;
@@ -65,5 +83,123 @@ public class HealthWorkerRestController {
 		
 		return allPatientList;
 	}
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 06 oct 2020
+	 */
+	
+	@RequestMapping(value = "/addMedDtlsService", method = RequestMethod.POST)
+	public int patientMedDtlsController(@RequestBody PatientMedictnModel patientMedictnModel){
+		
+		int updateRows = 0;
+		PatientMedictnModel patMedModel =  healthWkrService.addMedicalDtlsService(patientMedictnModel);
+		if(patMedModel != null)
+			updateRows = 1;
+		return updateRows;
+	}
+	
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 06 oct 2020
+	 */
+	//****************Med Test Crud 6********************
+	@RequestMapping(value = "/addMedTestDtlsService", method = RequestMethod.POST)
+	public int patientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel){
+		
+		int updateRows = 0;
+		MedicalTestModel medicalTest =  healthWkrService.addMedicalTestDtlsService(medicalTestModel);
+		if(medicalTest != null)
+			updateRows = 1;
+		return updateRows;
+	}
+	
+
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 06 oct 2020
+	 */
+	
+	@RequestMapping(value = "/listMedTestDtlsService", method = RequestMethod.POST)
+	public  List<MedicalTestModel> listPatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel){
+		List<MedicalTestModel> medicalTestList =  healthWkrService.listMedicalTestDtlsService(medicalTestModel.getUserId().getUserId());
+		return medicalTestList;
+	}
+	
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 06 oct 2020
+	 */
+	
+	@RequestMapping(value = "/deleteMedTestDtlsService", method = RequestMethod.POST)
+	public  int deletePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel){
+		int deleted =  healthWkrService.deleteMedicalTestDtlsService(medicalTestModel.getMedTestId());
+		return deleted;
+	}
+	
+	
+	@RequestMapping(value = "/updateMedTestDtlsService", method = RequestMethod.POST)
+	public  int updatePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel){
+		int updateRows = 0;
+		MedicalTestModel medicalTest =  healthWkrService.updateMedicalTestDtlsService(medicalTestModel);
+		
+		if(medicalTest != null)
+			updateRows = 1;
+		return updateRows;
+	}
+	
+	
+	//***************ZONE CRUD**********************
+	
+	
+	@RequestMapping(value = "/addZoneDtlsService", method = RequestMethod.POST)
+	public int addZoneController(@RequestBody StateModel stateModel){
+		
+		int updateRows = 0;
+		StateModel state =  healthWkrService.addZoneDtlsService(stateModel);
+		if(state != null)
+			updateRows = 1;
+		return updateRows;
+	}
+	
+
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 06 oct 2020
+	 */
+	
+	@RequestMapping(value = "/listZoneDtlsService", method = RequestMethod.POST)
+	public  List<StateModel> listZoneDtlsController(@RequestBody StateModel stateModel){
+		List<StateModel> stateList =  healthWkrService.listZoneDtlsService(stateModel.getStateId());
+		return stateList;
+	}
+	
+	/**
+	 * 
+	 * @author Sibin
+	 * @since 06 oct 2020
+	 */
+	
+	@RequestMapping(value = "/deleteZoneDtlsService", method = RequestMethod.POST)
+	public  int deletePatientMedTestDtlsController(@RequestBody StateModel stateModel){
+		int deleted =  healthWkrService.deleteZoneDtlsService(stateModel.getStateId());
+		return deleted;
+	}
+	
+	
+	@RequestMapping(value = "/updateZoneDtlsService", method = RequestMethod.POST)
+	public  int updatePatientMedTestDtlsController(@RequestBody StateModel stateModel){
+		int updateRows = 0;
+		StateModel state =  healthWkrService.updateZoneDtlsService(stateModel);
+		
+		if(state != null)
+			updateRows = 1;
+		return updateRows;
+	}
+	
 
 }

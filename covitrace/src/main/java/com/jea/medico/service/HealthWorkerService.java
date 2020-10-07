@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 import com.jea.medico.model.MedicalDtlsModel;
+import com.jea.medico.model.MedicalTestModel;
 import com.jea.medico.model.PatientMedicationInfoModel;
 import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
@@ -97,4 +98,21 @@ public interface HealthWorkerService {
 	 * @return
 	 */
 	public UserChildModel createUserService(User user);
+	/**
+	 * @author sibin
+	 * @param PatientMedictnModel
+	 * @return PatientMedictnModel
+	 * @since 06 oct 2020
+	 */
+	public PatientMedictnModel addMedicalDtlsService(PatientMedictnModel PatientMedictnModel) ;
+	
+	public MedicalTestModel addMedicalTestDtlsService(MedicalTestModel medicalTestModel);
+	
+	public List<MedicalTestModel>  listMedicalTestDtlsService(int userId);
+	public int  deleteMedicalTestDtlsService(int medTestId);
+	public MedicalTestModel  updateMedicalTestDtlsService(MedicalTestModel medicalTestModel);
+	public StateModel addZoneDtlsService(StateModel stateModel);
+	public  List<StateModel>  listZoneDtlsService(int stateId) ;
+	public StateModel  updateZoneDtlsService(StateModel stateModel);
+	public int  deleteZoneDtlsService(int stateId);
 }

@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jea.medico.model.MedicalDtlsModel;
+import com.jea.medico.model.MedicalTestModel;
+import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.repository.MedicalDtlsRepository;
+import com.jea.medico.repository.MedicalTestDtlsRepo;
 import com.jea.medico.repository.PatientDtlsRepository;
+import com.jea.medico.repository.PatientMedictnRepo;
 import com.jea.medico.repository.StateRepository;
 import com.jea.medico.repository.UserChildRepository;
 import com.jea.medico.repository.UserMasterRepository;
@@ -38,6 +42,13 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	UserMasterRepository userMasterRepo;
 	@Autowired
 	MedicalDtlsRepository medDtlsRepo;
+	
+	@Autowired
+	PatientMedictnRepo patientMedictnRepo;
+	
+
+	@Autowired
+	MedicalTestDtlsRepo medicalTestDtlsRepo;
 
 	@Override
 	public List<StateModel> getStateListService() {
@@ -109,4 +120,65 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 		
 		return userChildRepo.save(userChild);
 	}
+	
+	@Override
+	@Transactional
+	public PatientMedictnModel addMedicalDtlsService(PatientMedictnModel PatientMedictnModel) {
+		return patientMedictnRepo.save(PatientMedictnModel);
+	}
+	 
+	
+	@Override
+	@Transactional
+	public MedicalTestModel addMedicalTestDtlsService(MedicalTestModel medicalTestModel) {
+		return medicalTestDtlsRepo.save(medicalTestModel);
+	}
+	
+	@Override
+	public List<MedicalTestModel>  listMedicalTestDtlsService(int userId) {
+		System.out.println("medicalTestModel.getUserId().getUserId()::"+userId);
+		return medicalTestDtlsRepo.findByUserId(userId);
+	} 
+	
+	@Override
+	@Transactional
+	public int  deleteMedicalTestDtlsService(int medTestId) {
+		return medicalTestDtlsRepo.deleteBymedTestId(medTestId);
+	} 
+	
+	@Override
+	@Transactional
+	public MedicalTestModel  updateMedicalTestDtlsService(MedicalTestModel medicalTestModel) {
+		return medicalTestDtlsRepo.save(medicalTestModel);
+	} 
+	
+	//***********ZOne
+	@Override
+	@Transactional
+	public StateModel addZoneDtlsService(StateModel stateModel) {
+		return stateRepo.save(stateModel);
+	}
+	
+	@Override
+	public List<StateModel>  listZoneDtlsService(int stateId){
+		return stateRepo.findByStateId(stateId);
+	} 
+	
+	@Override
+	@Transactional
+	public int  deleteZoneDtlsService(int stateId) {
+		return stateRepo.deleteBystateId(stateId);
+	} 
+	
+	@Override
+	@Transactional
+	public StateModel  updateZoneDtlsService(StateModel stateModel) {
+		return stateRepo.save(stateModel);
+	}
+	
+	
+	
+	
 }
+
+
