@@ -217,8 +217,9 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 		
 		int count = patQuestionsRepo.randomQstDtlsServiceCount();
 		Set<PatQuestionsModel> set = new LinkedHashSet<PatQuestionsModel>();
+		Random generator = new Random();
 		for (int i = 0; i <= count; i++) {
-			Random generator = new Random();
+			
 			PatQuestionsModel patm = patQuestionsRepo.randomQstDtlsService(generator.nextInt(count)) ;
 			if(patm != null && !patm.equals(null)) {
 				set.add(patQuestionsRepo.randomQstDtlsService(generator.nextInt(count)));
@@ -228,7 +229,6 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 				break;
 		}
 		List<PatQuestionsModel> qstList=	new ArrayList<PatQuestionsModel>(set);
-		System.out.println("HAIIIAIAIAIA:::::::"+qstList);
 		return qstList;
 	}
 	

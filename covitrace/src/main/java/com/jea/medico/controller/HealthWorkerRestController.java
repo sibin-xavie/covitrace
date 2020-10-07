@@ -237,7 +237,6 @@ public class HealthWorkerRestController {
 	@RequestMapping(value = "/randomQuestionDtlsService", method = RequestMethod.POST)
 	public  List<PatQuestionsModel> randomQuestionDtlsController(){
 		List<PatQuestionsModel> questionList =  healthWkrService.randomQstDtlsService();
-		System.out.println("questionList::::"+questionList);
 		return questionList;
 	}
 	

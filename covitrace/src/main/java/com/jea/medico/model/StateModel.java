@@ -28,8 +28,8 @@ public @Data class StateModel {
 	private String talukName; 
 	@Column(name="country" ,length = 40 ,nullable = false)
 	private String countryName; 
-	@Column(name="iso_code" ,length = 3 ,nullable = false)
-	private String CountryISOCode; 
+	@Column(name="cntry_iso_code" ,length = 3 ,nullable = true)
+	private String CountryISOCodeA; 
 	
 	
 	@Column(name="contmnt_zone" ,length = 100 ,nullable = false)
