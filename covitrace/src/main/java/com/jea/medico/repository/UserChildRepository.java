@@ -15,5 +15,6 @@ public interface UserChildRepository extends JpaRepository<UserChildModel, Integ
 int updatePatientDetails(boolean isolated_in, int userChildId);
 
 UserChildModel findByuserChildId(int userChildId);
+UserChildModel findByUserId(UserMasterModel userMaster);
 	
 }

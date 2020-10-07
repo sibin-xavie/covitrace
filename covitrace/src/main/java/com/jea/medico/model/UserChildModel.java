@@ -50,6 +50,9 @@ public @Data class UserChildModel {
 	private double userLong;
 	@Column(name = "isolated_in", length = 50,nullable = false)
 	private boolean userIsolatedStatus;
+	@Column(name = "user_image_path", length = 500)
+	private String userImagePath;
+	
 	
 	
 	
