@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.MedicalTestModel;
+import com.jea.medico.model.PatQuestionsModel;
 import com.jea.medico.model.PatientMedicationInfoModel;
 import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
@@ -115,4 +116,8 @@ public interface HealthWorkerService {
 	public  List<StateModel>  listZoneDtlsService(int stateId) ;
 	public StateModel  updateZoneDtlsService(StateModel stateModel);
 	public int  deleteZoneDtlsService(int stateId);
+	public PatQuestionsModel addQstDtlsService(PatQuestionsModel patQuestionsModel);
+	public PatQuestionsModel updateQstDtlsService(PatQuestionsModel patQuestionsModel);
+	public int deleteQstDtlsService(PatQuestionsModel patQuestionsModel);
+	public List<PatQuestionsModel>  randomQstDtlsService();
 }

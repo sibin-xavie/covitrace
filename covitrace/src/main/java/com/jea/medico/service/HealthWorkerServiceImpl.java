@@ -1,10 +1,15 @@
 package com.jea.medico.service;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.Set;
 
+import org.aspectj.weaver.patterns.TypePatternQuestions.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -12,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.MedicalTestModel;
+import com.jea.medico.model.PatQuestionsModel;
 import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.User;
@@ -19,6 +25,7 @@ import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.repository.MedicalDtlsRepository;
 import com.jea.medico.repository.MedicalTestDtlsRepo;
+import com.jea.medico.repository.PatQuestionsRepo;
 import com.jea.medico.repository.PatientDtlsRepository;
 import com.jea.medico.repository.PatientMedictnRepo;
 import com.jea.medico.repository.StateRepository;
@@ -49,6 +56,12 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 
 	@Autowired
 	MedicalTestDtlsRepo medicalTestDtlsRepo;
+	
+
+	@Autowired
+	PatQuestionsRepo patQuestionsRepo;
+	
+	
 
 	@Override
 	public List<StateModel> getStateListService() {
@@ -175,6 +188,53 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	public StateModel  updateZoneDtlsService(StateModel stateModel) {
 		return stateRepo.save(stateModel);
 	}
+	
+	//***************Question add/edit/delete*************
+	
+	
+	@Override
+	@Transactional
+	public PatQuestionsModel addQstDtlsService(PatQuestionsModel patQuestionsModel) {
+		return patQuestionsRepo.save(patQuestionsModel);
+	}
+	
+	@Override
+	@Transactional
+	public PatQuestionsModel updateQstDtlsService(PatQuestionsModel patQuestionsModel) {
+		return patQuestionsRepo.save(patQuestionsModel);
+	}
+	
+	@Override
+	@Transactional
+	public int deleteQstDtlsService(PatQuestionsModel patQuestionsModel) {
+		return patQuestionsRepo.deleteByPatMedId(patQuestionsModel.getQuestionId());
+	}
+	
+	
+	@Override
+	@Transactional
+	public List<PatQuestionsModel>  randomQstDtlsService() {
+		
+		int count = patQuestionsRepo.randomQstDtlsServiceCount();
+		Set<PatQuestionsModel> set = new LinkedHashSet<PatQuestionsModel>();
+		for (int i = 0; i <= count; i++) {
+			Random generator = new Random();
+			PatQuestionsModel patm = patQuestionsRepo.randomQstDtlsService(generator.nextInt(count)) ;
+			if(patm != null && !patm.equals(null)) {
+				set.add(patQuestionsRepo.randomQstDtlsService(generator.nextInt(count)));
+			}
+			
+			if(set.size() >= 4 &&  !set.contains(null)) 
+				break;
+		}
+		List<PatQuestionsModel> qstList=	new ArrayList<PatQuestionsModel>(set);
+		System.out.println("HAIIIAIAIAIA:::::::"+qstList);
+		return qstList;
+	}
+	
+	
+	 
+	
 	
 	
 	

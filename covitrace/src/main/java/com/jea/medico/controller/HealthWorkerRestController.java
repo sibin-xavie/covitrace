@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.jea.medico.exception.PatientException;
 import com.jea.medico.model.MedicalTestModel;
+import com.jea.medico.model.PatQuestionsModel;
 import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.User;
@@ -200,6 +201,46 @@ public class HealthWorkerRestController {
 			updateRows = 1;
 		return updateRows;
 	}
+	
+	//********************Questions add/dlete/edit
+	
+
+	@RequestMapping(value = "/addQuestionService", method = RequestMethod.POST)
+	public int addQuestionController(@RequestBody PatQuestionsModel patQuestionsModel){
+		
+		int updateRows = 0;
+		PatQuestionsModel patQuestion =  healthWkrService.addQstDtlsService(patQuestionsModel);
+		if(patQuestion != null)
+			updateRows = 1;
+		return updateRows;
+	}
+	
+	@RequestMapping(value = "/updateQuestionDtlsService", method = RequestMethod.POST)
+	public  int updateQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel){
+		int updateRows = 0;
+		PatQuestionsModel patQuestions =  healthWkrService.updateQstDtlsService(patQuestionsModel);
+		
+		if(patQuestions != null)
+			updateRows = 1;
+		return updateRows;
+	}
+	
+	@RequestMapping(value = "/deleteQuestionDtlsService", method = RequestMethod.POST)
+	public  int deleteQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel){
+		int deleted =  healthWkrService.deleteQstDtlsService(patQuestionsModel);
+		return deleted;
+	}
+	
+	//****************4 random  question generator
+	
+	
+	@RequestMapping(value = "/randomQuestionDtlsService", method = RequestMethod.POST)
+	public  List<PatQuestionsModel> randomQuestionDtlsController(){
+		List<PatQuestionsModel> questionList =  healthWkrService.randomQstDtlsService();
+		System.out.println("questionList::::"+questionList);
+		return questionList;
+	}
+	
 	
 
 }

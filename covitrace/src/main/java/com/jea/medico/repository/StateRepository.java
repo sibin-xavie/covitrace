@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.StateModel;
 @Repository
 public interface StateRepository extends JpaRepository<StateModel, Integer>{
