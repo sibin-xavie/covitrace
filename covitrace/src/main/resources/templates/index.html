@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title data-th-text="#{application.title}"></title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js" ></script>
+</head>
+
+<body class="container">
+<form th:action="@{/web/registration}" method="get">
+   
+</form>
+
+<div class="row">
+     <div class="col-sm-6">
+
+        <div class="row">
+			<div class="form-signin">
+		<form th:action="@{/web/login}" method="POST" class="form-signin" id="login">
+        <br/>
+		<center><h2 th:text="#{label.login.header}">Login</h2></center>
+        <div class="form-group" align="center" th:if="${param.error}">
+            <label class="error" th:text="#{error.login.message}">User Name or Password invalid, please verify</label>
+        </div>
+        <div class="form-group">
+			  <input class="form-control" type="text" id="user_name" name="user_name" th:placeholder="#{label.user.manage.email}">
+			<!-- </div> -->
+		</div>
+		<div class="form-group">
+			  <input class="form-control" id="password" name="password" type="password" th:placeholder="#{label.user.manage.password}">
+			<!-- </div> -->
+		</div>
+		<br/>
+
+        <button class="btn btn-danger btn-block" name="Submit" th:text="#{label.login.login}" type="Submit"></button> <br/>
+         <a class="registration" th:href="@{/web/registration}"><div class="pull-right" th:text="#{label.registration.joinnow}">Join now?</div></a>
+   	</form>
+   	</div>
+   	</div>
+	</div>
+</div>
+
+</body>
+
+	<script >
+		var localized_message = {
+			"error.login.user_name.required": "[[#{error.login.user_name.required}]]",
+			"error.login.user_name.email": "[[#{error.login.user_name.email}]]",
+			"error.login.password.required": "[[#{error.login.password.required}]]",
+		};
+	</script>
+	<script th:src="@{/js/outside_script.js}"></script>
+</html>
