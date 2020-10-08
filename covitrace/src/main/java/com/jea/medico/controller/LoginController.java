@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 @Controller
-public class ViewController {
+public class LoginController {
 
 	
-	@RequestMapping(value={"/", "index"}, method=RequestMethod.GET)
+	@RequestMapping(value={"/web/login"}, method=RequestMethod.GET)
 	public ModelAndView index() {
 		return new ModelAndView("index");
 	}
