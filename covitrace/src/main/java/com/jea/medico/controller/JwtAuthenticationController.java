@@ -57,7 +57,6 @@ public class JwtAuthenticationController {
 		final String token = jwtTokenUtil.generateToken(userDetails);
 		
 		UserMasterModel user = userRepository.findByUsername(authenticationRequest.getUsername());
-		System.out.println("authenticationRequest.getUserId():::"+user.getUserId());
 		UserChildModel userChildModel = userChildRepository.findByUserId(user);
 		
 

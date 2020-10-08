@@ -214,8 +214,10 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	@Override
 	@Transactional
 	public List<PatQuestionsModel>  randomQstDtlsService() {
-		
+		List<PatQuestionsModel> qstList = null;
 		int count = patQuestionsRepo.randomQstDtlsServiceCount();
+		System.out.println("count" + count);
+		if(count > 0) {
 		Set<PatQuestionsModel> set = new LinkedHashSet<PatQuestionsModel>();
 		Random generator = new Random();
 		for (int i = 0; i <= count; i++) {
@@ -228,7 +230,8 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 			if(set.size() >= 4 &&  !set.contains(null)) 
 				break;
 		}
-		List<PatQuestionsModel> qstList=	new ArrayList<PatQuestionsModel>(set);
+		 qstList=	new ArrayList<PatQuestionsModel>(set);
+		}
 		return qstList;
 	}
 	
