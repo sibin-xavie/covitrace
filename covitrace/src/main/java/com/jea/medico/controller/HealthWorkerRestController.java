@@ -125,7 +125,7 @@ public class HealthWorkerRestController {
 	
 	@RequestMapping(value = "/listMedTestDtlsService", method = RequestMethod.POST)
 	public  List<MedicalTestModel> listPatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel){
-		List<MedicalTestModel> medicalTestList =  healthWkrService.listMedicalTestDtlsService(medicalTestModel.getUserId().getUserId());
+		List<MedicalTestModel> medicalTestList =  healthWkrService.listMedicalTestDtlsService(medicalTestModel.getUserId());
 		return medicalTestList;
 	}
 	
@@ -156,7 +156,7 @@ public class HealthWorkerRestController {
 	//***************ZONE CRUD**********************
 	
 	
-	@RequestMapping(value = "/addZoneDtlsService", method = RequestMethod.POST)
+	@RequestMapping(value = "/addZoneDtlService", method = RequestMethod.POST)
 	public int addZoneController(@RequestBody StateModel stateModel){
 		
 		int updateRows = 0;

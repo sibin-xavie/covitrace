@@ -148,9 +148,8 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	}
 	
 	@Override
-	public List<MedicalTestModel>  listMedicalTestDtlsService(int userId) {
-		System.out.println("medicalTestModel.getUserId().getUserId()::"+userId);
-		return medicalTestDtlsRepo.findByUserId(userId);
+	public List<MedicalTestModel>  listMedicalTestDtlsService(UserMasterModel userId) {
+		return medicalTestDtlsRepo.listMedicalTestUserDtls(userId);
 	} 
 	
 	@Override

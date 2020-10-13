@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.jea.medico.model.MedicalTestModel;
+import com.jea.medico.model.UserMasterModel;
 
 public interface MedicalTestDtlsRepo  extends JpaRepository<MedicalTestModel, Integer>{
 
@@ -15,5 +16,9 @@ public interface MedicalTestDtlsRepo  extends JpaRepository<MedicalTestModel, In
 	@Modifying
 	@Query("delete from MedicalTestModel b where b.medTestId=?1")
 	int deleteBymedTestId(Integer medTestId);
+	@Query("select m from MedicalTestModel m where m.userId =?1")
+	List<MedicalTestModel> listMedicalTestUserDtls(UserMasterModel userId);
+	
+	
 	
 }

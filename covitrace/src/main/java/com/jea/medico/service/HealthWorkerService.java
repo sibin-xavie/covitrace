@@ -109,7 +109,7 @@ public interface HealthWorkerService {
 	
 	public MedicalTestModel addMedicalTestDtlsService(MedicalTestModel medicalTestModel);
 	
-	public List<MedicalTestModel>  listMedicalTestDtlsService(int userId);
+	public List<MedicalTestModel>  listMedicalTestDtlsService(UserMasterModel userId);
 	public int  deleteMedicalTestDtlsService(int medTestId);
 	public MedicalTestModel  updateMedicalTestDtlsService(MedicalTestModel medicalTestModel);
 	public StateModel addZoneDtlsService(StateModel stateModel);
