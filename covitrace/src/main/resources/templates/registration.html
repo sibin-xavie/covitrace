@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title data-th-text="#{application.title}">Registration Form</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.1/jquery.validate.js" ></script>
+</head>
+<body class="outside">
+
+<div class="container">
+  <div class="col-sm-6">
+
+    <div class="row">
+        <div class="col-md">
+        	<div class="form-signin">
+                <center><span class="text-success" th:utext="${successMessage}"></span></center>
+
+            <form autocomplete="off" action="#" th:action="@{/web/registration}"
+                  th:object="${user}" method="post" id="registration" role="form">
+                <center><h2 th:text="#{label.registration.header}">Registration Form</h2></center>
+                <div class="form-group">
+                    <div class="col-sm">
+                        <input type="text" th:field="*{email}" th:placeholder="#{label.user.manage.email}"
+                               class="form-control form-control-sm"/> <label
+                            th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm">
+                        <input type="text" th:field="*{userName}" th:placeholder="#{label.user.manage.username}"
+                               class="form-control form-control-sm"/>
+                        <label th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}"
+                               class="validation-message"></label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm">
+                        <input type="password" th:field="*{password}"
+                               th:placeholder="#{label.user.manage.password}" class="form-control form-control-sm"/> 
+                        <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}"
+                            class="validation-message"></label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm">
+                        <input type="password" name="confirm_password" id="confirm_password"
+                               th:placeholder="#{label.user.manage.confirmpassword}" class="form-control"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm">
+                        <button type="submit" class="btn btn-danger btn-block" th:text="#{label.registration.register}">Register User</button> <br/>
+        				 <a class="registration" th:href="@{/web/login}"><div class="pull-right" th:text="#{label.registration.signin}">Sign in</div></a>
+                    </div>
+                </div>
+
+            </form>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+  	<img th:src="@{/images/registration_image.png}" class="img-responsive center-block" alt="Logo" />
+  </div>
+
+	<div class="modal fade bd-example-modal-sm" id="registrationModal" tabindex="-1" role="dialog" aria-labelledby="invoiceModal" aria-hidden="true">
+	  <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel" th:text="#{label.modal.message.header}">New message</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body" id="registration-message">
+		      
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal" th:text="#{label.modal.button.close}">Close</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+</body>
+
+<script >
+	var localized_message = {
+		"error.registration.userName.required": "[[#{error.registration.userName.required}]]",
+		"error.registration.userSsn.required": "[[#{error.registration.userSsn.required}]]",
+		"error.registration.userSsn.maxlength": "[[#{error.registration.userSsn.maxlength}]]",
+		"error.registration.userSsn.minlength": "[[#{error.registration.userSsn.minlength}]]",
+		"error.registration.email.required": "[[#{error.registration.email.required}]]",
+		"error.registration.email.email": "[[#{error.registration.email.email}]]",
+		"error.registration.password.required": "[[#{error.registration.password.required}]]",
+		"error.registration.confirm_password.required": "[[#{error.registration.confirm_password.required}]]",
+		"error.registration.confirm_password.match": "[[#{error.registration.confirm_password.match}]]",
+	};
+</script>
+</html>

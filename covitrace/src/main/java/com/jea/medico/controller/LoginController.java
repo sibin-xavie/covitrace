@@ -12,4 +12,9 @@ public class LoginController {
 	public ModelAndView index() {
 		return new ModelAndView("index");
 	}
+
+	@RequestMapping(value={"/web/registration"}, method=RequestMethod.GET)
+	public ModelAndView registration() {
+		return new ModelAndView("registration");
+	}
 }
