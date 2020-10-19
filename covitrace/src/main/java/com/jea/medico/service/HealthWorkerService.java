@@ -113,11 +113,13 @@ public interface HealthWorkerService {
 	public int  deleteMedicalTestDtlsService(int medTestId);
 	public MedicalTestModel  updateMedicalTestDtlsService(MedicalTestModel medicalTestModel);
 	public StateModel addZoneDtlsService(StateModel stateModel);
-	public  List<StateModel>  listZoneDtlsService(int stateId) ;
+	public  List<StateModel>  listZoneDtlsService() ;
 	public StateModel  updateZoneDtlsService(StateModel stateModel);
 	public int  deleteZoneDtlsService(int stateId);
 	public PatQuestionsModel addQstDtlsService(PatQuestionsModel patQuestionsModel);
 	public PatQuestionsModel updateQstDtlsService(PatQuestionsModel patQuestionsModel);
 	public int deleteQstDtlsService(PatQuestionsModel patQuestionsModel);
 	public List<PatQuestionsModel>  randomQstDtlsService();
+	
+	public int createUserMaster(UserMasterModel user);
 }

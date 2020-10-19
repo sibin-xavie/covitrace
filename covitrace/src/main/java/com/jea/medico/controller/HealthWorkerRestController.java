@@ -16,6 +16,7 @@ import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
 import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
+import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.service.HealthWorkerService;
 
 /**
@@ -35,6 +36,14 @@ public class HealthWorkerRestController {
 		System.out.println("Address: " + user.getChild().getUserAddress());
 
 		return user.getChild();
+	}
+	
+	@RequestMapping(value = "/registerService", method = RequestMethod.POST)
+	public int registerService(@RequestBody UserMasterModel user) throws PatientException {
+		int result = healthWkrService.createUserMaster(user);
+//		System.out.println("Address: " + user.getChild().getUserAddress());
+
+		return result;
 	}
 	
 	
@@ -174,8 +183,8 @@ public class HealthWorkerRestController {
 	 */
 	
 	@RequestMapping(value = "/listZoneDtlsService", method = RequestMethod.POST)
-	public  List<StateModel> listZoneDtlsController(@RequestBody StateModel stateModel){
-		List<StateModel> stateList =  healthWkrService.listZoneDtlsService(stateModel.getStateId());
+	public  List<StateModel> listZoneDtlsController(){
+		List<StateModel> stateList =  healthWkrService.listZoneDtlsService();
 		return stateList;
 	}
 	

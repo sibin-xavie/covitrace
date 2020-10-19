@@ -55,12 +55,17 @@ public class JwtAuthenticationController {
 		
 		
 		final String token = jwtTokenUtil.generateToken(userDetails);
+		double lat = 0.0, lng = 0.0;
 		
 		UserMasterModel user = userRepository.findByUsername(authenticationRequest.getUsername());
 		UserChildModel userChildModel = userChildRepository.findByUserId(user);
 		
-
-JwtResponse response = new JwtResponse(token,userChildModel.getUserLat(),userChildModel.getUserLong(),user.getRoleId().getRoleId());
+		if(userChildModel != null) {
+			lat = userChildModel.getUserLat();
+			lng = userChildModel.getUserLat();
+		}
+		
+		JwtResponse response = new JwtResponse(token,lat,lng,user.getRoleId().getRoleId());
 
 
 

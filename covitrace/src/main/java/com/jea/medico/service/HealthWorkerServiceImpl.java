@@ -172,8 +172,8 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	}
 	
 	@Override
-	public List<StateModel>  listZoneDtlsService(int stateId){
-		return stateRepo.findByStateId(stateId);
+	public List<StateModel>  listZoneDtlsService(){
+		return stateRepo.findAll();
 	} 
 	
 	@Override
@@ -232,6 +232,25 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 		 qstList=	new ArrayList<PatQuestionsModel>(set);
 		}
 		return qstList;
+	}
+
+	@Override
+	public int createUserMaster(UserMasterModel user) {
+		// TODO Auto-generated method stub
+		
+		int result = 1;
+		
+		UserMasterModel userMaster = user;
+		Date date = new Date(Calendar.getInstance().getTime().getTime());
+		userMaster.setUserLastLog(date);
+		userMaster = userMasterRepo.save(userMaster);
+		
+		System.out.print(userMaster.getUserPassword());
+		if(userMaster == null) {
+			result = 0;
+		}
+		return result;
+	
 	}
 	
 	
