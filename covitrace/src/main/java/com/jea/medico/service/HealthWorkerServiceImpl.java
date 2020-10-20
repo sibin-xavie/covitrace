@@ -252,13 +252,14 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 		return result;
 	
 	}
+
+	@Override
+	public List<PatientMedictnModel> listMedicineDtlsService(UserMasterModel userId) {
+		// TODO Auto-generated method stub
+		return patientMedictnRepo.listMedicineUserDtls(userId);
+	}
 	
-	
-	 
-	
-	
-	
-	
+
 	
 }
 

@@ -109,6 +109,22 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 	
+//	@RequestMapping(value = "/listMedDtlsService", method = RequestMethod.POST)
+//	public int listPatientMedDtlsController(@RequestBody PatientMedictnModel patientMedictnModel){
+//		
+//		int updateRows = 0;
+//		PatientMedictnModel patMedModel =  healthWkrService.addMedicalDtlsService(patientMedictnModel);
+//		if(patMedModel != null)
+//			updateRows = 1;
+//		return updateRows;
+//	}
+	
+	@RequestMapping(value = "/listMedDtlsService", method = RequestMethod.POST)
+	public  List<PatientMedictnModel> listPatientMedDtlsController(@RequestBody PatientMedictnModel patientMedictnModel){
+		List<PatientMedictnModel> medicalTestList =  healthWkrService.listMedicineDtlsService(patientMedictnModel.getUserId());
+		return medicalTestList;
+	}
+	
 	/**
 	 * 
 	 * @author Sibin
