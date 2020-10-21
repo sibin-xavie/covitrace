@@ -44,15 +44,8 @@ public @Data class UserChildModel {
 	private String userTaluk;
 	@Column(name = "email", length = 50,nullable = false)
 	private String userEmail;
-	@Column(name = "user_lat", length = 50,nullable = false)
-	private double userLat;
-	@Column(name = "user_lng", length = 50,nullable = false)
-	private double userLong;
 	@Column(name = "isolated_in", length = 50,nullable = false)
 	private boolean userIsolatedStatus;
-	@Column(name = "user_image_path", length = 500)
-	private String userImagePath;
-	
 	
 	
 	

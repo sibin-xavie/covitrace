@@ -1,4 +1,4 @@
-/*package com.jea.medico;
+package com.jea.medico;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -27,4 +27,4 @@ public class Initializer implements WebApplicationInitializer {
 		servlet.setLoadOnStartup(1);
 	}
 
-}*/
+}

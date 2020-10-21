@@ -5,12 +5,9 @@ import java.util.List;
 import java.util.Optional;
 
 import com.jea.medico.model.MedicalDtlsModel;
-import com.jea.medico.model.MedicalTestModel;
-import com.jea.medico.model.PatQuestionsModel;
 import com.jea.medico.model.PatientMedicationInfoModel;
 import com.jea.medico.model.PatientMedictnModel;
 import com.jea.medico.model.StateModel;
-import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 /** 
@@ -86,41 +83,4 @@ public interface HealthWorkerService {
 	
 	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel);
 	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
-	public UserChildModel updateUserService(UserChildModel user);
-	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
-	public UserChildModel createUserService(User user);
-	/**
-	 * @author sibin
-	 * @param PatientMedictnModel
-	 * @return PatientMedictnModel
-	 * @since 06 oct 2020
-	 */
-	public PatientMedictnModel addMedicalDtlsService(PatientMedictnModel PatientMedictnModel) ;
-	
-	public MedicalTestModel addMedicalTestDtlsService(MedicalTestModel medicalTestModel);
-	
-	public List<MedicalTestModel>  listMedicalTestDtlsService(UserMasterModel userId);
-	public List<PatientMedictnModel>  listMedicineDtlsService(UserMasterModel userId);
-	public int  deleteMedicalTestDtlsService(int medTestId);
-	public MedicalTestModel  updateMedicalTestDtlsService(MedicalTestModel medicalTestModel);
-	public StateModel addZoneDtlsService(StateModel stateModel);
-	public  List<StateModel>  listZoneDtlsService() ;
-	public StateModel  updateZoneDtlsService(StateModel stateModel);
-	public int  deleteZoneDtlsService(int stateId);
-	public PatQuestionsModel addQstDtlsService(PatQuestionsModel patQuestionsModel);
-	public PatQuestionsModel updateQstDtlsService(PatQuestionsModel patQuestionsModel);
-	public int deleteQstDtlsService(PatQuestionsModel patQuestionsModel);
-	public List<PatQuestionsModel>  randomQstDtlsService();
-	
-	public int createUserMaster(UserMasterModel user);
 }

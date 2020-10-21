@@ -25,13 +25,15 @@ public  class UserMasterModel {
 	@Column(name="user_id")
 	private int userId;
 	@OneToOne
-	@JoinColumn(name = "role_id",nullable = false)
+	@JoinColumn(name = "role_id")
 	private RoleModel roleId;
 	@Column(name = "username",length = 150,nullable = false, unique = true)
 	private String username;
-	@Column(name = "password",length = 200,nullable = false)
+	@Column(name = "password",length = 200,nullable = false, unique = true)
 	private String userPassword;
-	@Column(name = "user_log",length = 200,nullable = false)
+	@Column(name = "user_log",length = 200,nullable = false, unique = true)
 	private Date userLastLog;
+	
+	
 
 }
