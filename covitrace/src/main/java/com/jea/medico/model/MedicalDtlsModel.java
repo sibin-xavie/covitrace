@@ -27,10 +27,15 @@ public  class MedicalDtlsModel {
 	private boolean isCovedTested;
 	@Column(name = "quaren_stat", length = 8,nullable = false)
 	private String patQuarenStats;
+	@Column(name = "comments", length = 100,nullable = true)
+	private String comments;
+	
+	@Column(name = "further_obs", length = 100,nullable = true)
+	private String further_obser;
 	
 	@OneToOne
 	@JoinColumn(name = "user_id")
-	private UserMasterModel userId; 
+	private UserMasterModel userId;
 
 
 

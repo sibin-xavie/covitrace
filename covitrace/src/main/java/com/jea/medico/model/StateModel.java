@@ -14,8 +14,9 @@ import lombok.Data;
 * @since 11 sep 2020 1.15 PM
 */
 @Entity
+@Data
 @Table(name="state_info")
-public @Data class StateModel {
+public  class StateModel {
 	@Id
 	@GeneratedValue
 	@Column(name="state_id")
@@ -28,7 +29,12 @@ public @Data class StateModel {
 	private String talukName; 
 	@Column(name="country" ,length = 40 ,nullable = false)
 	private String countryName; 
-	@Column(name="iso_code" ,length = 3 , unique = true,nullable = false)
-	private String CountryISOCode; 
+	@Column(name="iso_code" ,length = 3 ,nullable = false)
+	private String countryISOCode; 
+	
+	
+	@Column(name="contmnt_zone" ,length = 100 ,nullable = false)
+	private String containmentZone; 
+	
 
 }

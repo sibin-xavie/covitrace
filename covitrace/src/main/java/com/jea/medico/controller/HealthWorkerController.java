@@ -131,8 +131,8 @@ public class HealthWorkerController {
 		int medicalId = Integer.parseInt(request.getParameter("medicalId"));
 
 		boolean saved = false;
-		MedicalDtlsModel mdclModel = healthWkrService.retrivePatMedQstHistService(medicalId);
-		return mdclModel;
+		//MedicalDtlsModel mdclModel = healthWkrService.retrivePatMedQstHistService(medicalId);
+		return null;
 	}
 
 }

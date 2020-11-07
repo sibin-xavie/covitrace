@@ -5,9 +5,13 @@ import java.util.List;
 import java.util.Optional;
 
 import com.jea.medico.model.MedicalDtlsModel;
+import com.jea.medico.model.MedicalTestModel;
+import com.jea.medico.model.PatQuestionsModel;
 import com.jea.medico.model.PatientMedicationInfoModel;
 import com.jea.medico.model.PatientMedictnModel;
+import com.jea.medico.model.RandomQstAnswerModel;
 import com.jea.medico.model.StateModel;
+import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 /** 
@@ -64,7 +68,7 @@ public interface HealthWorkerService {
 	* @implSpec update the patient Medical history in  PatientMedictnModel
 	* @param Integer userId 
 	*/
-	public MedicalDtlsModel retrivePatMedQstHistService(int userId);
+	public MedicalDtlsModel retrivePatMedQstHistService(UserMasterModel userId);
 	/** 
 	* @author Sibin 
 	* @since 14 sep 2020 
@@ -82,5 +86,62 @@ public interface HealthWorkerService {
 	*/
 	
 	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel);
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public UserChildModel updateUserService(UserChildModel user);
+	
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	public UserChildModel createUserService(User user);
+	/**
+	 * @author sibin
+	 * @param PatientMedictnModel
+	 * @return PatientMedictnModel
+	 * @since 06 oct 2020
+	 */
+	public PatientMedictnModel addMedicalDtlsService(PatientMedictnModel PatientMedictnModel) ;
+	
+	public MedicalTestModel addMedicalTestDtlsService(MedicalTestModel medicalTestModel);
+	
+	public List<MedicalTestModel>  listMedicalTestDtlsService(UserMasterModel userId);
+	public int  deleteMedicalTestDtlsService(int medTestId);
+	public MedicalTestModel  updateMedicalTestDtlsService(MedicalTestModel medicalTestModel);
+	public StateModel addZoneDtlsService(StateModel stateModel);
+	public  List<StateModel>  listZoneDtlsService() ;
+	public StateModel  updateZoneDtlsService(StateModel stateModel);
+	public int  deleteZoneDtlsService(int stateId);
+	public PatQuestionsModel addQstDtlsService(PatQuestionsModel patQuestionsModel);
+	public PatQuestionsModel updateQstDtlsService(PatQuestionsModel patQuestionsModel);
+	public int deleteQstDtlsService(PatQuestionsModel patQuestionsModel);
+	public List<PatQuestionsModel>  randomQstDtlsService();
+	/**
+	 * @author sibin
+	 * @since 06 oct 2020
+	 * @modifiedOn 23-10-2020
+	 * @param UserMasterModel
+	 * @return List
+	 * @implSpec get the list of medical details like medical count,temp count by user id
+	 */
+	public List<PatientMedictnModel> listMedicineDtlsService(UserMasterModel userId);
+	/**
+	 * @author Linoy
+	 * @since  20 oct 2020
+	 * @param UserMasterModel
+	 * @return int
+	 * @implSpec save the userrmaster model only like username,password etc in model(No userchild mapped)
+	 */
+	public int createUserMaster(UserMasterModel user);
+	
+	public RandomQstAnswerModel randomQstAnswerSaveService(RandomQstAnswerModel randomQstAnswerModel);
+	
+	public List<PatientMedicationInfoModel>  listPatMediTstUserDtlsService(UserMasterModel usrModel);
+	
 	
 }
