@@ -46,7 +46,8 @@ public @Data class UserChildModel {
 	private String userEmail;
 	@Column(name = "isolated_in", length = 50,nullable = false)
 	private boolean userIsolatedStatus;
-	
+	/*@author sibin
+	 * */
 	
 	
 	@OneToOne
