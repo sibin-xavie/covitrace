@@ -45,7 +45,7 @@ public  class PatientMedictnModel {
 	 * @date 27 oct 2020
 	 * @desc changed from boolean to double
 	 */
-	@Column(name = "blood_sugar_count",length = 3,nullable = false)
+	@Column(name = "blood_sugar_count",length = 30,nullable = false)
 	private double bloodSugarCount;
 	/**
 	 * @modifiedBy Sibin Xavier

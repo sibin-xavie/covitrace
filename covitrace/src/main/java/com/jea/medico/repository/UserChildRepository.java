@@ -16,5 +16,10 @@ int updatePatientDetails(boolean isolated_in, int userChildId);
 
 UserChildModel findByuserChildId(int userChildId);
 UserChildModel findByUserId(UserMasterModel userMaster);
+
+
+@Modifying
+@Query("update UserChildModel u set u.patientFCMKey = ?1 where u.userId = ?2")
+int updateFCMToken(String patientFCMKey, UserMasterModel userId);
 	
 }

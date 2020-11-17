@@ -96,4 +96,8 @@ public @Data class UserChildModel {
 	private Date patDob;
 	@Column(name = "gender", length = 150,nullable = false)
 	private String gender;
+	
+	@Column(name = "pat_fcmkey",length = 200,nullable = false)
+	private String patientFCMKey;
+
 }

@@ -33,7 +33,5 @@ public  class UserMasterModel {
 	private String userPassword;
 	@Column(name = "user_log",length = 200,nullable = false)
 	private Date userLastLog;
-	@Column(name = "pat_fcmkey",length = 200,nullable = false)
-	private String patientFCMKey;
 
 }

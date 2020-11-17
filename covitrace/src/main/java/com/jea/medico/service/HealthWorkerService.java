@@ -143,5 +143,5 @@ public interface HealthWorkerService {
 	
 	public List<PatientMedicationInfoModel>  listPatMediTstUserDtlsService(UserMasterModel usrModel);
 	
-	
+	public int updateFCMService(String fcmKey, UserMasterModel userId);
 }

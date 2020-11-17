@@ -150,15 +150,11 @@
 			<version>1.18.12</version>
 			<scope>provided</scope>
 		</dependency> -->
+
 <dependency>
-    <groupId>com.google.firebase</groupId>
-    <artifactId>firebase-admin</artifactId>
-    <version>6.8.1</version>
-</dependency>
-<dependency>
-  <groupId>org.json</groupId>
-  <artifactId>json</artifactId>
-  <version>20160810</version>
+  <groupId>com.google.firebase</groupId>
+  <artifactId>firebase-admin</artifactId>
+  <version>6.14.0</version>
 </dependency>
 
 	</dependencies>

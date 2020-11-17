@@ -280,7 +280,12 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	}
 	
 	
-	
+	@Override
+	@Transactional
+	public int updateFCMService(String fcmKey, UserMasterModel userId) {
+System.out.println("fcmKey::"+ fcmKey);
+		return userChildRepo.updateFCMToken(fcmKey, userId);
+	}
 	
 }
 
