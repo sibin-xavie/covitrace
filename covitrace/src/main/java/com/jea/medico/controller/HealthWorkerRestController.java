@@ -361,16 +361,15 @@ public class HealthWorkerRestController {
 	 * */
 
 	@RequestMapping(value = "/match", method = RequestMethod.POST)
-	public ResponseEntity<?> matchFacePhotoOfPatient(@RequestParam("file1") MultipartFile matchImagePat1,
+	public ResponseEntity<?> matchFacePhotoOfPatient(@RequestParam("file1") String matchImagePat1,
 			@RequestParam("file2") MultipartFile matchImagePat2) {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		String url = "http://13.234.35.105:8080/api/v1/faces/match"; 
 		String response = "";
 		HttpStatus httpStatus = HttpStatus.CREATED;
 		try {
-			map.add("file1", new MultipartInputStreamFileResource(matchImagePat1.getInputStream(),
-					matchImagePat1.getOriginalFilename()));
-			map.add("file2", new MultipartInputStreamFileResource(matchImagePat1.getInputStream(),
+			map.add("file1",matchImagePat1);
+			map.add("file2", new MultipartInputStreamFileResource(matchImagePat2.getInputStream(),
 					matchImagePat2.getOriginalFilename()));
 		} catch (IOException e) {
 			e.printStackTrace();
