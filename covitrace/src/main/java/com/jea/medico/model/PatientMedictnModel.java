@@ -54,13 +54,13 @@ public  class PatientMedictnModel {
 	 * Start
 	 */
 	@Column(name = "temp_count", length = 3,nullable = false)
-	private double temperatureCount;
+	private Double temperatureCount;
 	@Column(name = "heart_rate_count", length = 3,nullable = false)
-	private double heartRateCount;
+	private Double heartRateCount;
 	@Column(name = "blood_pressure_count_sys", length = 3,nullable = false)
-	private double bloodPressureCountSys;
+	private Double bloodPressureCountSys;
 	@Column(name = "blood_pressure_count_dia", length = 3,nullable = false)
-	private double bloodPressureCountDia;
+	private Double bloodPressureCountDia;
 		/*End*/
 	/**
 	 * @modifiedBy Sibin Xavier
