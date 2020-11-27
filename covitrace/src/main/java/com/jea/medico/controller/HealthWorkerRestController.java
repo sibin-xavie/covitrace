@@ -2,8 +2,8 @@ package com.jea.medico.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.google.firebase.messaging.FirebaseMessaging;
-import com.google.firebase.messaging.FirebaseMessagingException;
-import com.google.firebase.messaging.Message;
 import com.jea.medico.exception.PatientException;
+import com.jea.medico.model.FaceUploadJsonBean;
 import com.jea.medico.model.MedicalDtlsModel;
 import com.jea.medico.model.MedicalTestModel;
 import com.jea.medico.model.PatQuestionsModel;
@@ -32,9 +29,9 @@ import com.jea.medico.model.StateModel;
 import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
-
 import com.jea.medico.service.HealthWorkerService;
 import com.jea.medico.util.MultipartInputStreamFileResource;
+
 
 /**
  * 
@@ -47,17 +44,29 @@ public class HealthWorkerRestController {
 	@Autowired
 	HealthWorkerService healthWkrService;
 
+	
+
+	/**
+	 * @author Vikas
+	 * @param User class
+	 * @return {@link UserChildModel}
+	 * @implNote registers the pateints in the application
+	 * @since 27 September 2020
+	 * */
+	
 	@RequestMapping(value = "/patientRegisterService", method = RequestMethod.POST)
-	public UserChildModel patientListService(@RequestBody User user) throws PatientException {
+	public UserChildModel patientListService(@RequestBody User user) {
 		healthWkrService.createUserService(user);
 		return user.getChild();
 	}
 
 	/**
 	 * @author linoy
-	 * @param user
-	 * @return
+	 * @param UserMasterModel
+	 * @implSpec used to insert values only to the UserMasterModel
+	 * @return {@link Integer}
 	 * @throws PatientException
+	 *
 	 */
 	@RequestMapping(value = "/registerService", method = RequestMethod.POST)
 	public int registerService(@RequestBody UserMasterModel user) throws PatientException {
@@ -66,6 +75,14 @@ public class HealthWorkerRestController {
 
 		return result;
 	}
+	
+	/**
+	 * @author Sibin
+	 * @param UserChildModel
+	 * @implSpec used to update patient details 
+	 * @return {@link Integer}
+	 *
+	 */
 
 	@RequestMapping(value = "/updatePatientService", method = RequestMethod.POST)
 	public int updatePatientService(@RequestBody UserChildModel userDetails) {
@@ -80,6 +97,8 @@ public class HealthWorkerRestController {
 	 * 
 	 * @author Sibin
 	 * @since 30 Sep 2020
+	 * @return {@link List}
+	 * @r
 	 */
 
 	@RequestMapping(value = "/getStateListServices", method = RequestMethod.POST)
@@ -304,20 +323,20 @@ public class HealthWorkerRestController {
 		System.out.println("sibisninsa" + userChildModel);
 		return healthWkrService.updateFCMService(userChildModel.getPatientFCMKey(), userChildModel.getUserId());
 	}
-/**
- * 
- * 
- * @createdon 20 nov 2020
- * @mcreatedBy Sibin Xavier
- * @desc : for facial recognition uploading of photo
- * */
-	
-	
+
+	/**
+	 * 
+	 * 
+	 * @createdon 20 nov 2020
+	 * @mcreatedBy Sibin Xavier
+	 * @desc : for facial recognition uploading of photo
+	 */
+
 	@RequestMapping(value = "/uploadFacePhoto", method = RequestMethod.POST)
 	public ResponseEntity<?> uploadFacePhotoOfPatient(@RequestParam("uploadImage") MultipartFile uploadImagePat) {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
 		String url = "http://13.234.35.105:8080/api/v1/faces/image/upload";
-		String response = "";
+
 		HttpStatus httpStatus = HttpStatus.CREATED;
 		try {
 			map.add("imageFile", new MultipartInputStreamFileResource(uploadImagePat.getInputStream(),
@@ -330,45 +349,43 @@ public class HealthWorkerRestController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
-		response = restTemplate.postForObject(url, requestEntity, String.class);
-		return new ResponseEntity<>(response, httpStatus);
+		FaceUploadJsonBean fb = restTemplate.postForObject(url, requestEntity, FaceUploadJsonBean.class);
+		return new ResponseEntity<>(fb, httpStatus);
 	}
-	
-	
+
 	/**
 	 * 
 	 * 
 	 * @createdon 20 nov 2020
 	 * @mcreatedBy Sibin Xavier
 	 * @desc : for getting face
-	 * */
-	
+	 */
+
 	@RequestMapping(value = "/get", method = RequestMethod.POST)
-	public String getFacePhoto(@RequestParam("get") String getName) {
+	public FaceUploadJsonBean getFacePhoto(@RequestParam("get") String getName) {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-		String url = "http://13.234.35.105:8080/api/v1/faces/image/get" + getName;
+		String url = "http://13.234.35.105:8080/api/v1/faces/image/get/" + getName;
 		RestTemplate restTemplate = new RestTemplate();
-		String response = restTemplate.getForObject(url, String.class);
-		return response;
+		FaceUploadJsonBean fb = restTemplate.getForObject(url, FaceUploadJsonBean.class);
+		return fb;
 	}
-	
+
 	/**
 	 * 
 	 * 
 	 * @createdon 20 nov 2020
-	 * @mcreatedBy Sibin Xavier
-	 * @desc : for MATCHING 2  face
-	 * */
+	 * @createdBy Sibin Xavier
+	 * @desc : for MATCHING 2 face
+	 */
 
-	@RequestMapping(value = "/match", method = RequestMethod.POST)
+	@RequestMapping(value = "/matchParam", method = RequestMethod.POST)
 	public ResponseEntity<?> matchFacePhotoOfPatient(@RequestParam("file1") String matchImagePat1,
 			@RequestParam("file2") MultipartFile matchImagePat2) {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-		String url = "http://13.234.35.105:8080/api/v1/faces/match"; 
-		String response = "";
-		HttpStatus httpStatus = HttpStatus.CREATED;
+		String url = "http://13.234.35.105:8080/api/v1/faces/match";
+
 		try {
-			map.add("file1",matchImagePat1);
+			map.add("file1", matchImagePat1);
 			map.add("file2", new MultipartInputStreamFileResource(matchImagePat2.getInputStream(),
 					matchImagePat2.getOriginalFilename()));
 		} catch (IOException e) {
@@ -379,31 +396,33 @@ public class HealthWorkerRestController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
-		response = restTemplate.postForObject(url, requestEntity, String.class);
-		return new ResponseEntity<>(response, httpStatus);
-	}
-	
-	
-
-	@RequestMapping(value = "/fcmsend", method = RequestMethod.POST)
-	public String sendToToken() {
-		// [START send_to_token]
-		System.out.println("in method send");
-		// This registration token comes from the client FCM SDKs.
-		String registrationToken = "AAAANZLmOfk:APA91bFgGlF4tPy48VIyA6dntVXLPMCBlZ5S5-UauIej6j-DeKpqKTDqtDPdhXioksnZCaTyVp_YYgxe67kB8-TU5M3-zzC_F2in9JUhmOdUNqjgnrSaxInJFwCzcps3ZTQAybdRLXOu";
-		// See documentation on defining a message payload.
-		Message message = Message.builder().putData("title", "Covir Title").putData("message", "Covir Message")
-				.putData("body", "Covir Body").setToken(registrationToken).build();
-		// Send a message to the device corresponding to the provided
-		// registration token.
-		String response = "";
-		try {
-			response = FirebaseMessaging.getInstance().send(message);
-		} catch (FirebaseMessagingException e) {
-			e.printStackTrace();
+		Object listObj = restTemplate.postForObject(url, requestEntity, Object.class);
+		if (listObj instanceof LinkedHashMap) {
+			LinkedHashMap nomatch = (LinkedHashMap) listObj;
+			String nomatchResponse = nomatch.get("result").toString();
+			if (nomatchResponse.equalsIgnoreCase("NO Match")) {
+				listObj = 0;
+			}
 		}
-		// Response is a message ID string.
-		return response;
-		// [END send_to_token]
+		if (listObj instanceof ArrayList) {
+
+			ArrayList al = (ArrayList) listObj;
+			String similarity = "";
+			for (Object alObk : al) {
+				similarity = ((LinkedHashMap) alObk).get("similarity").toString();
+			}
+
+			Double match = Double.parseDouble(similarity);
+			if (match > 85) {
+				listObj = "1";
+			} else {
+				listObj = 0;
+			}
+
+		}
+
+		return new ResponseEntity<>(listObj, HttpStatus.OK);
 	}
+
+	
 }

@@ -35,6 +35,7 @@ import com.jea.medico.repository.RandomQstAnswerRepo;
 import com.jea.medico.repository.StateRepository;
 import com.jea.medico.repository.UserChildRepository;
 import com.jea.medico.repository.UserMasterRepository;
+import com.jea.medico.util.TrippleDes;
 
 /**
  * 
@@ -124,12 +125,17 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 		return userChildRepo.save(user);
 	}
 	
+	@Autowired
+	TrippleDes tripleDes;
+	
 	@Override
 	@Transactional
 	public UserChildModel createUserService(User user) {
 		UserMasterModel userMaster = user.getMaster();
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		userMaster.setUserLastLog(date);
+		
+		userMaster.setUserPassword(tripleDes.encrypt( user.getMaster().getUserPassword()));
 		userMaster = userMasterRepo.save(userMaster);
 		
 		UserChildModel userChild = user.getChild();

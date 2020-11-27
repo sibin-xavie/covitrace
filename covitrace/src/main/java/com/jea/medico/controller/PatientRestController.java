@@ -11,7 +11,6 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,28 +37,57 @@ import com.jea.medico.service.PatientService;
 public class PatientRestController {
 	@Autowired
 	PatientService patientService;
+	/**
+	 * @author Vikas
+	 * @param userId
+	 * @param photo
+	 * @return patient details if successfull uploading is done
+	 * @implNote uploading of patient profile photo .
+	 * @since 27 November 2020
+	 * */
+	
+	
+	/**
+	  
+	 * @modifiedby Sibin 
+	 * @desc added userId for uploading the patients profile pics,removed the auth
+	 * */
+	@RequestMapping(value = "/uploadPatientPhoto", method = RequestMethod.POST)
+	public User uploadPhoto(@RequestParam("photo") MultipartFile file, @RequestParam("userId") int userId) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		// User user = patientService.findUserByUserName(auth.getName());
 
-    @RequestMapping(value="/uploadPatientPhoto", method = RequestMethod.POST)
-    public User uploadPhoto(@RequestParam("photo") MultipartFile file,@RequestParam("userId") int userId){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = patientService.findUserByUserName(auth.getName());
-    	
-        user = patientService.uploadPhoto(user, file, userId);
-    	
+		User user = patientService.uploadPhoto(file, userId);
+
 		return user;
-    }
+	}
+	
+	/**
+	 * @author Vikas
+	 * @param userId
+	 * @return path to file in server
+	 * @implNote retrives the profile photo uploaded of patient uploaded.
+	 * @since 27 November 2020
+	 * */
+	
+	/**
+	  
+	 * @modifiedby Sibin
+	 * @desc added userId for getting the patients profile pics
+	 * */
 
-    @RequestMapping(value="/downloadPatientPhoto", method = RequestMethod.POST, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public @ResponseBody FileSystemResource downloadPhoto() throws IOException{
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = patientService.findUserByUserName(auth.getName());
-        
-        System.out.println("FileName: " + user.getChild().getUserImagePath());
-        String filename = user.getChild().getUserImagePath();
-        Path path = Paths.get(filename);
+	@RequestMapping(value = "/downloadPatientPhoto", method = RequestMethod.POST, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public @ResponseBody FileSystemResource downloadPhoto(@RequestParam("userId") int userId) throws IOException {
+		// Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		// User user = patientService.findUserByUserName(auth.getName());
 
-        System.out.println("Downloading...");
-    	return new FileSystemResource(path.toFile());
-    }
-    	
+		// System.out.println("FileName: " + user.getChild().getUserImagePath());
+		// String filename = user.getChild().getUserImagePath();
+
+		Path path = Paths.get(patientService.downloadByUserId(userId).getUserImagePath());
+
+		System.out.println("Downloading...");
+		return new FileSystemResource(path.toFile());
+	}
+
 }

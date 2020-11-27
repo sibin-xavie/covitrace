@@ -58,18 +58,29 @@ public class PatientServiceImpl implements PatientService {
 		return user;
 	}
 	
+	
+	
+	@Override
+	public UserChildModel downloadByUserId(int userId) {
+		User user = new User();
+		user.setMaster(userRepository.findByUserId(userId));
+		
+		UserChildModel childModel = userChildRepo.findUserChildByUserId(user.getMaster());
+		System.out.println("childModel :::::"+childModel);
+		return childModel;
+	}
 	/**
 	 * @modified by sibin
 	 * @desc health worker needs to save the profile pic of varois patients as patients do not have provision
 	 */
-	public User uploadPhoto(User user, MultipartFile file, int userId) {
+	public User uploadPhoto(MultipartFile file, int userId) {
         Path path = null;
-
+        User user = new User();
         if (!file.isEmpty()) {
             String filename = userId + "_" 
-            		+ file.getOriginalFilename();
+            		+ "PROF.jpg"; 
             try {
-            	File uploadFolderFile = new File(uploadFolder + File.separator +"profile_images" + File.separator +  userId);
+            	File uploadFolderFile = new File(uploadFolder + File.separator +"profile_images");
             	if(!uploadFolderFile.exists()) {
             		uploadFolderFile.mkdirs();
             	}
@@ -88,13 +99,17 @@ public class PatientServiceImpl implements PatientService {
         }
         if(path.toAbsolutePath() != null && !path.toAbsolutePath().toString().equals("")) {
         	// Store the path in DB table
-        	user.getChild().setUserImagePath(path.toAbsolutePath().toString());
-        	System.out.println("Saving image path to UserChild table");
-        	userChildRepo.save(user.getChild());
+        	
+    		user.setMaster(userRepository.findByUserId(userId));
+    		user.setChild(userChildRepo.findByUserId(user.getMaster()));
+        	
+        	System.out.println("Saving image path to UserChild table" + user.getMaster() );
+        	userChildRepo.updatePatientDProfilePic(path.toAbsolutePath().toString(),user.getMaster());
         }
 
         return user;
 	}
+
 
 
 }

@@ -11,4 +11,6 @@ import com.jea.medico.model.UserMasterModel;
 public interface UserRepository extends JpaRepository<UserMasterModel, Integer> {
 	List<UserMasterModel> findByUsernameAndUserPassword(String username, String userPassword);
 	UserMasterModel findByUsername(String username);
+	UserMasterModel findByUserId(int userId);
+	
 }

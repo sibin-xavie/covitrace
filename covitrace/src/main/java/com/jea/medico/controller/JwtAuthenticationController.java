@@ -2,6 +2,8 @@ package com.jea.medico.controller;
 
 import java.util.Objects;
 
+import javax.security.auth.login.CredentialException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import com.jea.medico.service.JwtUserDetailsService;
-
-
+import com.jea.medico.util.TrippleDes;
 import com.jea.medico.config.JwtTokenUtil;
 import com.jea.medico.model.JwtRequest;
 import com.jea.medico.model.JwtResponse;
@@ -44,12 +45,13 @@ public class JwtAuthenticationController {
 	
 	@Autowired
 	UserRepository userRepository;
-	
+	@Autowired
+	TrippleDes tripleDes;
 	@RequestMapping(value = "/authenticateUserService", method = RequestMethod.POST)
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
-
-		authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-
+		JwtResponse response = null;
+		try {
+		authenticate(authenticationRequest.getUsername(), tripleDes.encrypt(authenticationRequest.getPassword()));
 		final UserDetails userDetails = userDetailsService
 				.loadUserByUsername(authenticationRequest.getUsername());
 		
@@ -65,9 +67,12 @@ public class JwtAuthenticationController {
 			lng = userChildModel.getUserLat();
 		}
 		
-		JwtResponse response = new JwtResponse(token,lat,lng,user.getRoleId().getRoleId());
+		response = new JwtResponse(token,lat,lng,user.getRoleId().getRoleId());
 
-
+		}catch(Exception ex) {
+		throw new CredentialException("Invalid username/Password");
+		}
+	
 
 
 		return ResponseEntity.ok(response);
