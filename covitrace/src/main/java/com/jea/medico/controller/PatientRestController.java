@@ -26,6 +26,7 @@ import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.service.HealthWorkerService;
 import com.jea.medico.service.PatientService;
+import com.jea.medico.util.ImageBean;
 
 /**
  * 
@@ -77,7 +78,8 @@ public class PatientRestController {
 	 * */
 
 	@RequestMapping(value = "/downloadPatientPhoto", method = RequestMethod.POST, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public @ResponseBody FileSystemResource downloadPhoto(@RequestParam("userId") int userId) throws IOException {
+	//public @ResponseBody FileSystemResource downloadPhoto(@RequestParam("userId") int userId) throws IOException {
+	public  String downloadPhoto(@RequestParam("userId") int userId) throws IOException {
 		// Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		// User user = patientService.findUserByUserName(auth.getName());
 
@@ -86,8 +88,13 @@ public class PatientRestController {
 
 		Path path = Paths.get(patientService.downloadByUserId(userId).getUserImagePath());
 
-		System.out.println("Downloading...");
-		return new FileSystemResource(path.toFile());
+	
+		ImageBean bean = new ImageBean();
+		bean.setUserId(userId);
+		bean.setUserFilePath(path.toFile().getAbsolutePath());
+		System.out.println("Downloading..." + bean.getUserFilePath());
+		//return new FileSystemResource(path.toFile());
+		return path.toFile().getAbsolutePath();
 	}
 
 }

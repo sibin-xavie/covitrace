@@ -86,19 +86,22 @@ public interface HealthWorkerService {
 	*/
 	
 	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel);
+	/** 
+	* @author Sibin 
+	* @since 15 sep 2020 
+	* @return {@link UserChildModel}
+	* @implSpec update patient : updating patient information 
+	* @param  {@link UserChildModel}
+	*/
+	public UserChildModel updateUserService(UserChildModel userChildModel);
 	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
-	public UserChildModel updateUserService(UserChildModel user);
-	
-	/**
-	 * 
-	 * @param user
-	 * @return
-	 */
+	/** 
+	* @author Sibin 
+	* @since 15 sep 2020 
+	* @return {@link User}
+	* @implSpec update patient : updating patient information 
+	* @param  {@link UserChildModel}
+	*/
 	public UserChildModel createUserService(User user);
 	/**
 	 * @author sibin

@@ -48,9 +48,8 @@ public class HealthWorkerRestController {
 
 	/**
 	 * @author Vikas
-	 * @param User class
 	 * @return {@link UserChildModel}
-	 * @implNote registers the pateints in the application
+	 *@implNote registers the pateints in the application
 	 * @since 27 September 2020
 	 * */
 	
@@ -62,7 +61,6 @@ public class HealthWorkerRestController {
 
 	/**
 	 * @author linoy
-	 * @param UserMasterModel
 	 * @implSpec used to insert values only to the UserMasterModel
 	 * @return {@link Integer}
 	 * @throws PatientException
@@ -78,7 +76,6 @@ public class HealthWorkerRestController {
 	
 	/**
 	 * @author Sibin
-	 * @param UserChildModel
 	 * @implSpec used to update patient details 
 	 * @return {@link Integer}
 	 *
@@ -93,13 +90,16 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 
+	
 	/**
-	 * 
 	 * @author Sibin
-	 * @since 30 Sep 2020
+	 * @implSpec used to get State List
 	 * @return {@link List}
-	 * @r
+	 * @since 30 Sep 2020
+	 *
 	 */
+	
+	
 
 	@RequestMapping(value = "/getStateListServices", method = RequestMethod.POST)
 	public List<StateModel> getStateListController() {
@@ -109,10 +109,13 @@ public class HealthWorkerRestController {
 	}
 
 	/**
-	 * 
 	 * @author Sibin
+	 * @implSpec used to get patient List
+	 * @return {@link List}
 	 * @since 30 Sep 2020
+	 *
 	 */
+	
 
 	@RequestMapping(value = "/patientListService", method = RequestMethod.POST)
 	public List<UserChildModel> patientListController() {
@@ -124,10 +127,14 @@ public class HealthWorkerRestController {
 	}
 
 	/**
-	 * 
 	 * @author Sibin
+	 * @implSpec used to add patient medicinal details like medicine name,dosage,severity
+	 * @return {@link Integer}
 	 * @since 06 oct 2020
+	 *@param {@link PatientMedictnModel }
 	 */
+	
+	
 
 	@RequestMapping(value = "/addMedDtlsService", method = RequestMethod.POST)
 	public int patientMedDtlsController(@RequestBody PatientMedictnModel patientMedictnModel) {
@@ -139,11 +146,15 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 
+	
 	/**
-	 * 
 	 * @author Sibin
+	 * @implSpec used to add patient medical test details like test date,test result & remark
+	 * @return {@link Integer}
 	 * @since 06 oct 2020
+	 *@param {@link MedicalTestModel }
 	 */
+	
 	// ****************Med Test Crud 6********************
 	@RequestMapping(value = "/addMedTestDtlsService", method = RequestMethod.POST)
 	public int patientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
@@ -154,12 +165,18 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 
+	
 	/**
-	 * @author sibin
+	 * @author Sibin
+	 * @implSpec used to add patient medical test details like blood sugar,temperature,BP etc
+	 * @return {@link PatientMedictnModel}
 	 * @since 06 oct 2020
+	 *@param {@link UserMasterModel }
+	 */
+	
+	/**
+	 * @modifiedby sibin
 	 * @modifiedOn 23-10-2020
-	 * @param UserMasterModel
-	 * @return
 	 */
 	@RequestMapping(value = "/listMedDtlsService", method = RequestMethod.POST)
 	public List<PatientMedictnModel> listPatientMedDtlsController(@RequestBody UserMasterModel patientMedictnModel) {
@@ -167,11 +184,15 @@ public class HealthWorkerRestController {
 		return medicalTestList;
 	}
 
+	
 	/**
-	 * 
 	 * @author Sibin
+	 * @implSpec used to retrive patient medical test details  like test date,test result & remark
+	 * @return {@link MedicalTestModel}
 	 * @since 06 oct 2020
+	 *@param {@link MedicalTestModel }
 	 */
+	
 
 	@RequestMapping(value = "/listMedTestDtlsService", method = RequestMethod.POST)
 	public List<MedicalTestModel> listPatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
@@ -179,18 +200,28 @@ public class HealthWorkerRestController {
 				.listMedicalTestDtlsService(medicalTestModel.getUserId());
 		return medicalTestList;
 	}
-
 	/**
-	 * 
 	 * @author Sibin
+	 * @implSpec used to delete patient medical test details  like test date,test result & remark
+	 * @return {@link Integer}
 	 * @since 06 oct 2020
+	 *@param {@link MedicalTestModel }
 	 */
+	
 
 	@RequestMapping(value = "/deleteMedTestDtlsService", method = RequestMethod.POST)
 	public int deletePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
 		int deleted = healthWkrService.deleteMedicalTestDtlsService(medicalTestModel.getMedTestId());
 		return deleted;
 	}
+	
+	/**
+	 * @author Sibin
+	 * @implSpec used to update patient medical test details  like test date,test result & remark
+	 * @return {@link Integer}
+	 * @since 06 oct 2020
+	 *@param {@link MedicalTestModel }
+	 */
 
 	@RequestMapping(value = "/updateMedTestDtlsService", method = RequestMethod.POST)
 	public int updatePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
@@ -203,6 +234,14 @@ public class HealthWorkerRestController {
 	}
 
 	// ***************ZONE CRUD**********************
+	
+	/**
+	 * @author Sibin
+	 * @implSpec used to add states in DB
+	 * @return {@link Integer}
+	 * @since 06 oct 2020
+	 *@param {@link StateModel }
+	 */
 
 	@RequestMapping(value = "/addZoneDtlService", method = RequestMethod.POST)
 	public int addZoneController(@RequestBody StateModel stateModel) {
@@ -214,10 +253,13 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 
+	
+
 	/**
-	 * 
 	 * @author Sibin
-	 * @since 06 oct 2020
+	 * @implSpec used to list Zones 
+	 * @return {@link List}
+	 * @since 07 oct 2020
 	 */
 
 	@RequestMapping(value = "/listZoneDtlsService", method = RequestMethod.POST)
@@ -227,10 +269,13 @@ public class HealthWorkerRestController {
 	}
 
 	/**
-	 * 
 	 * @author Sibin
-	 * @since 06 oct 2020
+	 * @implSpec used to delete States 
+	 * @return {@link Integer}
+	 * @since 07 oct 2020
+	*@param {@link StateModel }
 	 */
+	
 
 	@RequestMapping(value = "/deleteZoneDtlsService", method = RequestMethod.POST)
 	public int deletePatientMedTestDtlsController(@RequestBody StateModel stateModel) {
@@ -249,6 +294,14 @@ public class HealthWorkerRestController {
 	}
 
 	// ********************Questions add/dlete/edit
+	
+	/**
+	 * @author Sibin
+	 * @implSpec used to add random question in DB
+	 * @return {@link Integer}
+	 * @since 07 oct 2020
+	*@param {@link PatQuestionsModel }
+	 */
 
 	@RequestMapping(value = "/addQuestionService", method = RequestMethod.POST)
 	public int addQuestionController(@RequestBody PatQuestionsModel patQuestionsModel) {
@@ -260,6 +313,14 @@ public class HealthWorkerRestController {
 		return updateRows;
 	}
 
+	
+	/**
+	 * @author Sibin
+	 * @implSpec used to update random question in DB
+	 * @return {@link Integer}
+	 * @since 07 oct 2020
+	*@param {@link PatQuestionsModel }
+	 */
 	@RequestMapping(value = "/updateQuestionDtlsService", method = RequestMethod.POST)
 	public int updateQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel) {
 		int updateRows = 0;
@@ -271,6 +332,12 @@ public class HealthWorkerRestController {
 	}
 
 	// ****************4 random question generator
+	/**
+	 * @author Sibin
+	 * @implSpec used to List random question in DB
+	 * @return {@link List}
+	 * @since 07 oct 2020
+	 */
 
 	@RequestMapping(value = "/randomQuestionDtlsService", method = RequestMethod.POST)
 	public List<PatQuestionsModel> randomQuestionDtlsController() {
@@ -278,6 +345,14 @@ public class HealthWorkerRestController {
 		return questionList;
 	}
 
+	/**
+	 * @author Sibin
+	 * @implSpec used to delete random question in DB
+	 * @return {@link Integer}
+	 * @since 07 oct 2020
+	*@param {@link PatQuestionsModel }
+	 */
+	
 	@RequestMapping(value = "/deleteQuestionDtlsService", method = RequestMethod.POST)
 	public int deleteQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel) {
 		int deleted = healthWkrService.deleteQstDtlsService(patQuestionsModel);
@@ -285,10 +360,14 @@ public class HealthWorkerRestController {
 	}
 
 	/**
-	 * @author sibin xavier
-	 * @since 23 oct 2020
-	 * 
+	 * @author Sibin
+	 * @implSpec used to List medical list of patient by userId
+	 * @return {@link MedicalDtlsModel}
+	 * @since 08 oct 2020
+	*@param {@link UserMasterModel }
 	 */
+	
+	
 	@RequestMapping(value = "/listPatMedDtlsService", method = RequestMethod.POST)
 	public MedicalDtlsModel listMedDtlsController(@RequestBody UserMasterModel userMasterUserId) {
 		MedicalDtlsModel medicalDtlsMode = null;
@@ -297,11 +376,15 @@ public class HealthWorkerRestController {
 		return medicalDtlsMode;
 	}
 
+	
 	/**
-	 * @author sibin xavier
-	 * @since 23 oct 2020
-	 * 
+	 * @author Sibin
+	 * @implSpec used to update random question answer
+	 * @return {@link Integer}
+	 * @since 09 oct 2020
+	*@param {@link RandomQstAnswerModel }
 	 */
+
 	@RequestMapping(value = "/randomQstAnswerSaveService", method = RequestMethod.POST)
 	public int randomQstAnswerSaveController(@RequestBody RandomQstAnswerModel randomQstAnswerModel) {
 		RandomQstAnswerModel randomQstAnswer = null;
@@ -314,9 +397,11 @@ public class HealthWorkerRestController {
 	}
 
 	/**
-	 * @author sibin xavier
-	 * @since 12 Nov 2020 10:19 AM
-	 * 
+	 * @author Sibin
+	 * @implSpec used to update FCM token of Androoid of user
+	 * @return {@link Integer}
+	 * @since 10 oct 2020
+	*@param {@link UserChildModel }
 	 */
 	@RequestMapping(value = "/updateFCMToken", method = RequestMethod.POST)
 	public int updateFCMToken(@RequestBody UserChildModel userChildModel) {
@@ -324,13 +409,18 @@ public class HealthWorkerRestController {
 		return healthWkrService.updateFCMService(userChildModel.getPatientFCMKey(), userChildModel.getUserId());
 	}
 
+	
+	
 	/**
-	 * 
-	 * 
-	 * @createdon 20 nov 2020
-	 * @mcreatedBy Sibin Xavier
-	 * @desc : for facial recognition uploading of photo
+	 * @author Sibin
+	 * @implSpec for facial recognition uploading of photo of facial recognition project
+	 * @return {@link JSON}
+	 * @since 20 November 2020
+	*@param {@link Multipart }
 	 */
+	
+	
+	
 
 	@RequestMapping(value = "/uploadFacePhoto", method = RequestMethod.POST)
 	public ResponseEntity<?> uploadFacePhotoOfPatient(@RequestParam("uploadImage") MultipartFile uploadImagePat) {
@@ -353,14 +443,8 @@ public class HealthWorkerRestController {
 		return new ResponseEntity<>(fb, httpStatus);
 	}
 
-	/**
-	 * 
-	 * 
-	 * @createdon 20 nov 2020
-	 * @mcreatedBy Sibin Xavier
-	 * @desc : for getting face
-	 */
 
+/*
 	@RequestMapping(value = "/get", method = RequestMethod.POST)
 	public FaceUploadJsonBean getFacePhoto(@RequestParam("get") String getName) {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
@@ -368,14 +452,14 @@ public class HealthWorkerRestController {
 		RestTemplate restTemplate = new RestTemplate();
 		FaceUploadJsonBean fb = restTemplate.getForObject(url, FaceUploadJsonBean.class);
 		return fb;
-	}
-
+	}*/
 	/**
-	 * 
-	 * 
-	 * @createdon 20 nov 2020
-	 * @createdBy Sibin Xavier
-	 * @desc : for MATCHING 2 face
+	 * @author Sibin
+	 * @implSpec for facial recognition uploading of photo of facial recognition project
+	 * @return {@link String}
+	 * @since 20 November 2020
+	*@param {@link String }
+	**@param {@link Multipart }
 	 */
 
 	@RequestMapping(value = "/matchParam", method = RequestMethod.POST)
