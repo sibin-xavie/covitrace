@@ -1,6 +1,7 @@
 package com.jea.medico.service;
 
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.LinkedHashSet;
@@ -130,15 +131,17 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	
 	@Override
 	@Transactional
-	public UserChildModel createUserService(User user) {
+	public UserChildModel createUserService(User user) throws SQLException{
+		
+		UserChildModel userChild = null;
+		
 		UserMasterModel userMaster = user.getMaster();
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		userMaster.setUserLastLog(date);
 		
 		userMaster.setUserPassword(tripleDes.encrypt( user.getMaster().getUserPassword()));
 		userMaster = userMasterRepo.save(userMaster);
-		
-		UserChildModel userChild = user.getChild();
+		 userChild = user.getChild();
 		userChild.setUserId(userMaster);
 		
 		return userChildRepo.save(userChild);

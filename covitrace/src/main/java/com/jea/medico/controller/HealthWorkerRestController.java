@@ -1,9 +1,12 @@
 package com.jea.medico.controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -54,9 +57,18 @@ public class HealthWorkerRestController {
 	 * */
 	
 	@RequestMapping(value = "/patientRegisterService", method = RequestMethod.POST)
-	public UserChildModel patientListService(@RequestBody User user) {
+	public Object patientListService(@RequestBody User user) {
+		Object  obj = null;
+		try {
 		healthWkrService.createUserService(user);
-		return user.getChild();
+		  obj = user.getChild();
+		} catch (SQLException e) {
+			obj = "Duplicate Entry Found";
+			
+		}
+		
+		
+		return  obj ;
 	}
 
 	/**

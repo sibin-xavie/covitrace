@@ -9,8 +9,27 @@ public class JwtResponse implements Serializable {
 	private  double userLat;
 	private  double userLng;
 	private int roleId;
+	private String success;
+	private String errorMsg;
 	
 	
+	
+
+	public String getSuccess() {
+		return success;
+	}
+
+	public void setSuccess(String success) {
+		this.success = success;
+	}
+
+	public String getErrorMsg() {
+		return errorMsg;
+	}
+
+	public void setErrorMsg(String errorMsg) {
+		this.errorMsg = errorMsg;
+	}
 
 	public int getRoleId() {
 		return roleId;
@@ -36,11 +55,13 @@ public class JwtResponse implements Serializable {
 		this.userLng = userLng;
 	}
 
-	public JwtResponse(String jwttoken,double userLat,double userLng,int roleId) {
+	public JwtResponse(String jwttoken,double userLat,double userLng,int roleId,String successMsg,String erorMsg) {
 		this.jwttoken = jwttoken;
 		this.userLat = userLat;
 		this.userLng = userLng;
 		this.roleId = roleId;
+		this.success = successMsg;
+		this.errorMsg = erorMsg;
 	}
 
 	public String getToken() {

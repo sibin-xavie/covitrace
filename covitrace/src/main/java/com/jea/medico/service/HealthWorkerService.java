@@ -1,6 +1,7 @@
 package com.jea.medico.service;
 
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -102,7 +103,7 @@ public interface HealthWorkerService {
 	* @implSpec update patient : updating patient information 
 	* @param  {@link UserChildModel}
 	*/
-	public UserChildModel createUserService(User user);
+	public UserChildModel createUserService(User user)  throws SQLException;
 	/**
 	 * @author sibin
 	 * @param PatientMedictnModel
