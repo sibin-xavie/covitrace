@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,8 +34,8 @@ import com.jea.medico.model.User;
 import com.jea.medico.model.UserChildModel;
 import com.jea.medico.model.UserMasterModel;
 import com.jea.medico.service.HealthWorkerService;
+import com.jea.medico.util.ConstantStrings;
 import com.jea.medico.util.MultipartInputStreamFileResource;
-
 
 /**
  * 
@@ -47,28 +48,39 @@ public class HealthWorkerRestController {
 	@Autowired
 	HealthWorkerService healthWkrService;
 
-	
+	@Autowired
+	ConstantStrings constantStrings;
 
 	/**
 	 * @author Vikas
 	 * @return {@link UserChildModel}
-	 *@implNote registers the pateints in the application
+	 * @implNote registers the pateints in the application
 	 * @since 27 September 2020
-	 * */
-	
+	 */
+
 	@RequestMapping(value = "/patientRegisterService", method = RequestMethod.POST)
-	public Object patientListService(@RequestBody User user) {
-		Object  obj = null;
+	public ResponseEntity<?> patientListService(@RequestBody User user) {
+		Object obj = null;
 		try {
-		healthWkrService.createUserService(user);
-		  obj = user.getChild();
-		} catch (SQLException e) {
-			obj = "Duplicate Entry Found";
-			
+			healthWkrService.createUserService(user);
+			user.getChild().setSuccess(true);
+			user.getChild().setErrorMsg(constantStrings.successString);
+			obj = user.getChild();
+		} catch (Exception e) {
+			 obj = e.getClass().getCanonicalName();
+			 System.out.println("cdc::: "+obj.toString() );
+e.printStackTrace();
+			if (e instanceof org.springframework.dao.DataIntegrityViolationException) {
+				user.getChild().setSuccess(false);
+				user.getChild().setErrorMsg(constantStrings.duplicateEntry);
+				obj = user.getChild();
+			} else {
+				obj = constantStrings.dataNotInserted;
+			}
+
 		}
-		
-		
-		return  obj ;
+
+		return ResponseEntity.ok(obj);
 	}
 
 	/**
@@ -79,30 +91,27 @@ public class HealthWorkerRestController {
 	 *
 	 */
 	@RequestMapping(value = "/registerService", method = RequestMethod.POST)
-	public int registerService(@RequestBody UserMasterModel user) throws PatientException {
-		// System.out.println("UserSibin:::::" + user);
+	public ResponseEntity<?> registerService(@RequestBody UserMasterModel user) throws PatientException {
 		int result = healthWkrService.createUserMaster(user);
-
-		return result;
+		return ResponseEntity.ok(result);
 	}
-	
+
 	/**
 	 * @author Sibin
-	 * @implSpec used to update patient details 
+	 * @implSpec used to update patient details
 	 * @return {@link Integer}
 	 *
 	 */
 
 	@RequestMapping(value = "/updatePatientService", method = RequestMethod.POST)
-	public int updatePatientService(@RequestBody UserChildModel userDetails) {
+	public ResponseEntity<?> updatePatientService(@RequestBody UserChildModel userDetails) {
 		int updateRows = 0;
 		UserChildModel user = healthWkrService.updateUserService(userDetails);
 		if (user != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
 
-	
 	/**
 	 * @author Sibin
 	 * @implSpec used to get State List
@@ -110,14 +119,12 @@ public class HealthWorkerRestController {
 	 * @since 30 Sep 2020
 	 *
 	 */
-	
-	
 
 	@RequestMapping(value = "/getStateListServices", method = RequestMethod.POST)
-	public List<StateModel> getStateListController() {
+	public ResponseEntity<?> getStateListController() {
 		List<StateModel> allStateList = new ArrayList<StateModel>();
 		allStateList = healthWkrService.getStateListService();
-		return allStateList;
+		return ResponseEntity.ok(allStateList);
 	}
 
 	/**
@@ -127,220 +134,215 @@ public class HealthWorkerRestController {
 	 * @since 30 Sep 2020
 	 *
 	 */
-	
 
 	@RequestMapping(value = "/patientListService", method = RequestMethod.POST)
-	public List<UserChildModel> patientListController() {
+	public ResponseEntity<?> patientListController() {
 		List<UserChildModel> allPatientList = null;
 
 		allPatientList = healthWkrService.getStPatientListService();
 
-		return allPatientList;
+		return ResponseEntity.ok(allPatientList);
 	}
 
 	/**
 	 * @author Sibin
-	 * @implSpec used to add patient medicinal details like medicine name,dosage,severity
+	 * @implSpec used to add patient medicinal details like medicine
+	 *           name,dosage,severity
 	 * @return {@link Integer}
 	 * @since 06 oct 2020
-	 *@param {@link PatientMedictnModel }
+	 * @param {@link PatientMedictnModel }
 	 */
-	
-	
 
 	@RequestMapping(value = "/addMedDtlsService", method = RequestMethod.POST)
-	public int patientMedDtlsController(@RequestBody PatientMedictnModel patientMedictnModel) {
+	public ResponseEntity<?> patientMedDtlsController(@RequestBody PatientMedictnModel patientMedictnModel) {
 
 		int updateRows = 0;
 		PatientMedictnModel patMedModel = healthWkrService.addMedicalDtlsService(patientMedictnModel);
 		if (patMedModel != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
 
-	
 	/**
 	 * @author Sibin
-	 * @implSpec used to add patient medical test details like test date,test result & remark
+	 * @implSpec used to add patient medical test details like test date,test result
+	 *           & remark
 	 * @return {@link Integer}
 	 * @since 06 oct 2020
-	 *@param {@link MedicalTestModel }
+	 * @param {@link MedicalTestModel }
 	 */
-	
+
 	// ****************Med Test Crud 6********************
 	@RequestMapping(value = "/addMedTestDtlsService", method = RequestMethod.POST)
-	public int patientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
+	public ResponseEntity<?> patientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
 		int updateRows = 0;
 		MedicalTestModel medicalTest = healthWkrService.addMedicalTestDtlsService(medicalTestModel);
 		if (medicalTest != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
 
-	
 	/**
 	 * @author Sibin
-	 * @implSpec used to add patient medical test details like blood sugar,temperature,BP etc
+	 * @implSpec used to add patient medical test details like blood
+	 *           sugar,temperature,BP etc
 	 * @return {@link PatientMedictnModel}
 	 * @since 06 oct 2020
-	 *@param {@link UserMasterModel }
+	 * @param {@link UserMasterModel }
 	 */
-	
+
 	/**
 	 * @modifiedby sibin
 	 * @modifiedOn 23-10-2020
 	 */
 	@RequestMapping(value = "/listMedDtlsService", method = RequestMethod.POST)
-	public List<PatientMedictnModel> listPatientMedDtlsController(@RequestBody UserMasterModel patientMedictnModel) {
+	public ResponseEntity<?> listPatientMedDtlsController(@RequestBody UserMasterModel patientMedictnModel) {
 		List<PatientMedictnModel> medicalTestList = healthWkrService.listMedicineDtlsService(patientMedictnModel);
-		return medicalTestList;
+		return ResponseEntity.ok(medicalTestList);
 	}
 
-	
 	/**
 	 * @author Sibin
-	 * @implSpec used to retrive patient medical test details  like test date,test result & remark
+	 * @implSpec used to retrive patient medical test details like test date,test
+	 *           result & remark
 	 * @return {@link MedicalTestModel}
 	 * @since 06 oct 2020
-	 *@param {@link MedicalTestModel }
+	 * @param {@link MedicalTestModel }
 	 */
-	
 
 	@RequestMapping(value = "/listMedTestDtlsService", method = RequestMethod.POST)
-	public List<MedicalTestModel> listPatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
+	public ResponseEntity<?> listPatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
 		List<MedicalTestModel> medicalTestList = healthWkrService
 				.listMedicalTestDtlsService(medicalTestModel.getUserId());
-		return medicalTestList;
+		return ResponseEntity.ok(medicalTestList);
 	}
+
 	/**
 	 * @author Sibin
-	 * @implSpec used to delete patient medical test details  like test date,test result & remark
+	 * @implSpec used to delete patient medical test details like test date,test
+	 *           result & remark
 	 * @return {@link Integer}
 	 * @since 06 oct 2020
-	 *@param {@link MedicalTestModel }
+	 * @param {@link MedicalTestModel }
 	 */
-	
 
 	@RequestMapping(value = "/deleteMedTestDtlsService", method = RequestMethod.POST)
-	public int deletePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
+	public ResponseEntity<?> deletePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
 		int deleted = healthWkrService.deleteMedicalTestDtlsService(medicalTestModel.getMedTestId());
-		return deleted;
+		return ResponseEntity.ok(deleted);
 	}
-	
+
 	/**
 	 * @author Sibin
-	 * @implSpec used to update patient medical test details  like test date,test result & remark
+	 * @implSpec used to update patient medical test details like test date,test
+	 *           result & remark
 	 * @return {@link Integer}
 	 * @since 06 oct 2020
-	 *@param {@link MedicalTestModel }
+	 * @param {@link MedicalTestModel }
 	 */
 
 	@RequestMapping(value = "/updateMedTestDtlsService", method = RequestMethod.POST)
-	public int updatePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
+	public ResponseEntity<?> updatePatientMedTestDtlsController(@RequestBody MedicalTestModel medicalTestModel) {
 		int updateRows = 0;
 		MedicalTestModel medicalTest = healthWkrService.updateMedicalTestDtlsService(medicalTestModel);
 
 		if (medicalTest != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
 
 	// ***************ZONE CRUD**********************
-	
+
 	/**
 	 * @author Sibin
 	 * @implSpec used to add states in DB
 	 * @return {@link Integer}
 	 * @since 06 oct 2020
-	 *@param {@link StateModel }
+	 * @param {@link StateModel }
 	 */
 
 	@RequestMapping(value = "/addZoneDtlService", method = RequestMethod.POST)
-	public int addZoneController(@RequestBody StateModel stateModel) {
+	public ResponseEntity<?> addZoneController(@RequestBody StateModel stateModel) {
 
 		int updateRows = 0;
 		StateModel state = healthWkrService.addZoneDtlsService(stateModel);
 		if (state != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
-
-	
 
 	/**
 	 * @author Sibin
-	 * @implSpec used to list Zones 
+	 * @implSpec used to list Zones
 	 * @return {@link List}
 	 * @since 07 oct 2020
 	 */
 
 	@RequestMapping(value = "/listZoneDtlsService", method = RequestMethod.POST)
-	public List<StateModel> listZoneDtlsController() {
+	public ResponseEntity<?> listZoneDtlsController() {
 		List<StateModel> stateList = healthWkrService.listZoneDtlsService();
-		return stateList;
+		return ResponseEntity.ok(stateList);
 	}
 
 	/**
 	 * @author Sibin
-	 * @implSpec used to delete States 
+	 * @implSpec used to delete States
 	 * @return {@link Integer}
 	 * @since 07 oct 2020
-	*@param {@link StateModel }
+	 * @param {@link StateModel }
 	 */
-	
 
 	@RequestMapping(value = "/deleteZoneDtlsService", method = RequestMethod.POST)
-	public int deletePatientMedTestDtlsController(@RequestBody StateModel stateModel) {
+	public ResponseEntity<?> deletePatientMedTestDtlsController(@RequestBody StateModel stateModel) {
 		int deleted = healthWkrService.deleteZoneDtlsService(stateModel.getStateId());
-		return deleted;
+		return ResponseEntity.ok(deleted);
 	}
 
 	@RequestMapping(value = "/updateZoneDtlsService", method = RequestMethod.POST)
-	public int updatePatientMedTestDtlsController(@RequestBody StateModel stateModel) {
+	public ResponseEntity<?> updatePatientMedTestDtlsController(@RequestBody StateModel stateModel) {
 		int updateRows = 0;
 		StateModel state = healthWkrService.updateZoneDtlsService(stateModel);
 
 		if (state != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
 
 	// ********************Questions add/dlete/edit
-	
+
 	/**
 	 * @author Sibin
 	 * @implSpec used to add random question in DB
 	 * @return {@link Integer}
 	 * @since 07 oct 2020
-	*@param {@link PatQuestionsModel }
+	 * @param {@link PatQuestionsModel }
 	 */
 
 	@RequestMapping(value = "/addQuestionService", method = RequestMethod.POST)
-	public int addQuestionController(@RequestBody PatQuestionsModel patQuestionsModel) {
+	public ResponseEntity<?> addQuestionController(@RequestBody PatQuestionsModel patQuestionsModel) {
 
 		int updateRows = 0;
 		PatQuestionsModel patQuestion = healthWkrService.addQstDtlsService(patQuestionsModel);
 		if (patQuestion != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
 
-	
 	/**
 	 * @author Sibin
 	 * @implSpec used to update random question in DB
 	 * @return {@link Integer}
 	 * @since 07 oct 2020
-	*@param {@link PatQuestionsModel }
+	 * @param {@link PatQuestionsModel }
 	 */
 	@RequestMapping(value = "/updateQuestionDtlsService", method = RequestMethod.POST)
-	public int updateQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel) {
+	public ResponseEntity<?> updateQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel) {
 		int updateRows = 0;
 		PatQuestionsModel patQuestions = healthWkrService.updateQstDtlsService(patQuestionsModel);
 
 		if (patQuestions != null)
 			updateRows = 1;
-		return updateRows;
+		return ResponseEntity.ok(updateRows);
 	}
 
 	// ****************4 random question generator
@@ -352,9 +354,9 @@ public class HealthWorkerRestController {
 	 */
 
 	@RequestMapping(value = "/randomQuestionDtlsService", method = RequestMethod.POST)
-	public List<PatQuestionsModel> randomQuestionDtlsController() {
+	public ResponseEntity<?> randomQuestionDtlsController() {
 		List<PatQuestionsModel> questionList = healthWkrService.randomQstDtlsService();
-		return questionList;
+		return ResponseEntity.ok(questionList);
 	}
 
 	/**
@@ -362,13 +364,13 @@ public class HealthWorkerRestController {
 	 * @implSpec used to delete random question in DB
 	 * @return {@link Integer}
 	 * @since 07 oct 2020
-	*@param {@link PatQuestionsModel }
+	 * @param {@link PatQuestionsModel }
 	 */
-	
+
 	@RequestMapping(value = "/deleteQuestionDtlsService", method = RequestMethod.POST)
-	public int deleteQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel) {
+	public ResponseEntity<?> deleteQuestionDtlsController(@RequestBody PatQuestionsModel patQuestionsModel) {
 		int deleted = healthWkrService.deleteQstDtlsService(patQuestionsModel);
-		return deleted;
+		return ResponseEntity.ok(deleted);
 	}
 
 	/**
@@ -376,36 +378,34 @@ public class HealthWorkerRestController {
 	 * @implSpec used to List medical list of patient by userId
 	 * @return {@link MedicalDtlsModel}
 	 * @since 08 oct 2020
-	*@param {@link UserMasterModel }
+	 * @param {@link UserMasterModel }
 	 */
-	
-	
+
 	@RequestMapping(value = "/listPatMedDtlsService", method = RequestMethod.POST)
-	public MedicalDtlsModel listMedDtlsController(@RequestBody UserMasterModel userMasterUserId) {
+	public ResponseEntity<?> listMedDtlsController(@RequestBody UserMasterModel userMasterUserId) {
 		MedicalDtlsModel medicalDtlsMode = null;
 		medicalDtlsMode = healthWkrService.retrivePatMedQstHistService(userMasterUserId);
 
-		return medicalDtlsMode;
+		return ResponseEntity.ok(medicalDtlsMode);
 	}
 
-	
 	/**
 	 * @author Sibin
 	 * @implSpec used to update random question answer
 	 * @return {@link Integer}
 	 * @since 09 oct 2020
-	*@param {@link RandomQstAnswerModel }
+	 * @param {@link RandomQstAnswerModel }
 	 */
 
 	@RequestMapping(value = "/randomQstAnswerSaveService", method = RequestMethod.POST)
-	public int randomQstAnswerSaveController(@RequestBody RandomQstAnswerModel randomQstAnswerModel) {
+	public ResponseEntity<?> randomQstAnswerSaveController(@RequestBody RandomQstAnswerModel randomQstAnswerModel) {
 		RandomQstAnswerModel randomQstAnswer = null;
 		int insertRows = 0;
 		randomQstAnswer = healthWkrService.randomQstAnswerSaveService(randomQstAnswerModel);
 		if (randomQstAnswer != null) {
 			insertRows = 1;
 		}
-		return insertRows;
+		return ResponseEntity.ok(insertRows);
 	}
 
 	/**
@@ -413,31 +413,30 @@ public class HealthWorkerRestController {
 	 * @implSpec used to update FCM token of Androoid of user
 	 * @return {@link Integer}
 	 * @since 10 oct 2020
-	*@param {@link UserChildModel }
+	 * @param {@link UserChildModel }
 	 */
 	@RequestMapping(value = "/updateFCMToken", method = RequestMethod.POST)
-	public int updateFCMToken(@RequestBody UserChildModel userChildModel) {
-		System.out.println("sibisninsa" + userChildModel);
-		return healthWkrService.updateFCMService(userChildModel.getPatientFCMKey(), userChildModel.getUserId());
+	public ResponseEntity<?> updateFCMToken(@RequestBody UserChildModel userChildModel) {
+		// System.out.println("sibisninsa" + userChildModel);
+		int updated = healthWkrService.updateFCMService(userChildModel.getPatientFCMKey(), userChildModel.getUserId());
+		return ResponseEntity.ok(updated);
 	}
 
-	
-	
 	/**
 	 * @author Sibin
-	 * @implSpec for facial recognition uploading of photo of facial recognition project
+	 * @implSpec for facial recognition uploading of photo of facial recognition
+	 *           project
 	 * @return {@link JSON}
 	 * @since 20 November 2020
-	*@param {@link Multipart }
+	 * @param {@link Multipart }
 	 */
-	
-	
-	
+
+	@Value("${upload.URL}")
+	private String uploadURL;
 
 	@RequestMapping(value = "/uploadFacePhoto", method = RequestMethod.POST)
 	public ResponseEntity<?> uploadFacePhotoOfPatient(@RequestParam("uploadImage") MultipartFile uploadImagePat) {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-		String url = "http://13.234.35.105:8080/api/v1/faces/image/upload";
 
 		HttpStatus httpStatus = HttpStatus.CREATED;
 		try {
@@ -451,35 +450,35 @@ public class HealthWorkerRestController {
 		RestTemplate restTemplate = new RestTemplate();
 
 		HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
-		FaceUploadJsonBean fb = restTemplate.postForObject(url, requestEntity, FaceUploadJsonBean.class);
+		FaceUploadJsonBean fb = restTemplate.postForObject(uploadURL, requestEntity, FaceUploadJsonBean.class);
 		return new ResponseEntity<>(fb, httpStatus);
 	}
 
-
-/*
-	@RequestMapping(value = "/get", method = RequestMethod.POST)
-	public FaceUploadJsonBean getFacePhoto(@RequestParam("get") String getName) {
-		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-		String url = "http://13.234.35.105:8080/api/v1/faces/image/get/" + getName;
-		RestTemplate restTemplate = new RestTemplate();
-		FaceUploadJsonBean fb = restTemplate.getForObject(url, FaceUploadJsonBean.class);
-		return fb;
-	}*/
+	/*
+	 * @RequestMapping(value = "/get", method = RequestMethod.POST) public
+	 * FaceUploadJsonBean getFacePhoto(@RequestParam("get") String getName) {
+	 * LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>(); String
+	 * url = "http://13.234.35.105:8080/api/v1/faces/image/get/" + getName;
+	 * RestTemplate restTemplate = new RestTemplate(); FaceUploadJsonBean fb =
+	 * restTemplate.getForObject(url, FaceUploadJsonBean.class); return fb; }
+	 */
 	/**
 	 * @author Sibin
-	 * @implSpec for facial recognition uploading of photo of facial recognition project
+	 * @implSpec for facial recognition uploading of photo of facial recognition
+	 *           project
 	 * @return {@link String}
 	 * @since 20 November 2020
-	*@param {@link String }
-	**@param {@link Multipart }
+	 * @param {@link String }
+	 ** @param {@link Multipart }
 	 */
+
+	@Value("${match.URL}")
+	private String matchURL;
 
 	@RequestMapping(value = "/matchParam", method = RequestMethod.POST)
 	public ResponseEntity<?> matchFacePhotoOfPatient(@RequestParam("file1") String matchImagePat1,
 			@RequestParam("file2") MultipartFile matchImagePat2) {
 		LinkedMultiValueMap<String, Object> map = new LinkedMultiValueMap<>();
-		String url = "http://13.234.35.105:8080/api/v1/faces/match";
-
 		try {
 			map.add("file1", matchImagePat1);
 			map.add("file2", new MultipartInputStreamFileResource(matchImagePat2.getInputStream(),
@@ -490,9 +489,8 @@ public class HealthWorkerRestController {
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.MULTIPART_FORM_DATA);
 		RestTemplate restTemplate = new RestTemplate();
-
 		HttpEntity<LinkedMultiValueMap<String, Object>> requestEntity = new HttpEntity<>(map, headers);
-		Object listObj = restTemplate.postForObject(url, requestEntity, Object.class);
+		Object listObj = restTemplate.postForObject(matchURL, requestEntity, Object.class);
 		if (listObj instanceof LinkedHashMap) {
 			LinkedHashMap nomatch = (LinkedHashMap) listObj;
 			String nomatchResponse = nomatch.get("result").toString();
@@ -501,24 +499,18 @@ public class HealthWorkerRestController {
 			}
 		}
 		if (listObj instanceof ArrayList) {
-
 			ArrayList al = (ArrayList) listObj;
 			String similarity = "";
 			for (Object alObk : al) {
 				similarity = ((LinkedHashMap) alObk).get("similarity").toString();
 			}
-
 			Double match = Double.parseDouble(similarity);
 			if (match > 85) {
 				listObj = "1";
 			} else {
 				listObj = 0;
 			}
-
 		}
-
 		return new ResponseEntity<>(listObj, HttpStatus.OK);
 	}
-
-	
 }

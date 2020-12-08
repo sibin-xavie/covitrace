@@ -47,12 +47,11 @@ public class PatientRestController {
 	 * @since 27 November 2020
 	 * */
 	
-	
-	/**
+	/*
 	  
 	 * @modifiedby Sibin 
 	 * @desc added userId for uploading the patients profile pics,removed the auth
-	 * */
+	  */
 	@RequestMapping(value = "/uploadPatientPhoto", method = RequestMethod.POST)
 	public User uploadPhoto(@RequestParam("photo") MultipartFile file, @RequestParam("userId") int userId) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -71,11 +70,11 @@ public class PatientRestController {
 	 * @since 27 November 2020
 	 * */
 	
-	/**
+	/*
 	  
 	 * @modifiedby Sibin
 	 * @desc added userId for getting the patients profile pics
-	 * */
+	 */
 
 	@RequestMapping(value = "/downloadPatientPhoto", method = RequestMethod.POST, produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	//public @ResponseBody FileSystemResource downloadPhoto(@RequestParam("userId") int userId) throws IOException {

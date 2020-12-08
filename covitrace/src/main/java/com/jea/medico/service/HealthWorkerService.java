@@ -103,7 +103,7 @@ public interface HealthWorkerService {
 	* @implSpec update patient : updating patient information 
 	* @param  {@link UserChildModel}
 	*/
-	public UserChildModel createUserService(User user)  throws SQLException;
+	public UserChildModel createUserService(User user)  throws Exception;
 	/**
 	 * @author sibin
 	 * @param PatientMedictnModel

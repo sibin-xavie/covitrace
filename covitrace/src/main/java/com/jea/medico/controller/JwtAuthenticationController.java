@@ -70,6 +70,7 @@ public class JwtAuthenticationController {
 		response = new JwtResponse(token,lat,lng,user.getRoleId().getRoleId(),"true","Logged In Successfully");
 
 		}catch(Exception ex) {
+			ex.printStackTrace();
 		response = new JwtResponse("No",0.0,0.0,0,"false","Invalid Credentials");
 		}
 	

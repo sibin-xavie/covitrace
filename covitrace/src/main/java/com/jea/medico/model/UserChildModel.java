@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import lombok.Data;
 
@@ -99,5 +100,10 @@ public @Data class UserChildModel {
 	
 	@Column(name = "pat_fcmkey",length = 200,nullable = false)
 	private String patientFCMKey;
+	@Transient
+	 
+	private boolean success;
+	@Transient
+	private String errorMsg;
 
 }

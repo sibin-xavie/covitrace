@@ -44,6 +44,7 @@ import com.jea.medico.util.TrippleDes;
  * @since 13 sep 2020 9.30 PM
  */
 @Service
+@Transactional
 public class HealthWorkerServiceImpl implements HealthWorkerService {
 	@Autowired
 	StateRepository stateRepo;
@@ -94,7 +95,7 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	}
 
 	@Override
-	@Transactional
+	
 	public int updatePatientService(boolean isolatedStatus, int userId) {
 
 		return userChildRepo.updatePatientDetails(isolatedStatus, userId);
@@ -113,14 +114,12 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	}
 
 	@Override
-	@Transactional
 	public MedicalDtlsModel addPatHealthDataSaveService(MedicalDtlsModel medicalDltlsModel) {
 
 		return medDtlsRepo.save(medicalDltlsModel);
 	}
 
 	@Override
-	@Transactional
 	public UserChildModel updateUserService(UserChildModel user) {
 
 		return userChildRepo.save(user);
@@ -130,32 +129,33 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	TrippleDes tripleDes;
 	
 	@Override
-	@Transactional
-	public UserChildModel createUserService(User user) throws SQLException{
+	public UserChildModel createUserService(User user) throws Exception{
 		
 		UserChildModel userChild = null;
-		
+		try {
 		UserMasterModel userMaster = user.getMaster();
 		Date date = new Date(Calendar.getInstance().getTime().getTime());
 		userMaster.setUserLastLog(date);
-		
 		userMaster.setUserPassword(tripleDes.encrypt( user.getMaster().getUserPassword()));
 		userMaster = userMasterRepo.save(userMaster);
 		 userChild = user.getChild();
 		userChild.setUserId(userMaster);
+		}catch(Exception ed) {
+			
+		}
 		
 		return userChildRepo.save(userChild);
 	}
 	
 	@Override
-	@Transactional
+	
 	public PatientMedictnModel addMedicalDtlsService(PatientMedictnModel PatientMedictnModel) {
 		return patientMedictnRepo.save(PatientMedictnModel);
 	}
 	 
 	
 	@Override
-	@Transactional
+	
 	public MedicalTestModel addMedicalTestDtlsService(MedicalTestModel medicalTestModel) {
 		return medicalTestDtlsRepo.save(medicalTestModel);
 	}
@@ -166,20 +166,20 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	} 
 	
 	@Override
-	@Transactional
+	
 	public int  deleteMedicalTestDtlsService(int medTestId) {
 		return medicalTestDtlsRepo.deleteBymedTestId(medTestId);
 	} 
 	
 	@Override
-	@Transactional
+	
 	public MedicalTestModel  updateMedicalTestDtlsService(MedicalTestModel medicalTestModel) {
 		return medicalTestDtlsRepo.save(medicalTestModel);
 	} 
 	
 	//***********ZOne
 	@Override
-	@Transactional
+	
 	public StateModel addZoneDtlsService(StateModel stateModel) {
 		return stateRepo.save(stateModel);
 	}
@@ -190,13 +190,13 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	} 
 	
 	@Override
-	@Transactional
+	
 	public int  deleteZoneDtlsService(int stateId) {
 		return stateRepo.deleteBystateId(stateId);
 	} 
 	
 	@Override
-	@Transactional
+	
 	public StateModel  updateZoneDtlsService(StateModel stateModel) {
 		return stateRepo.save(stateModel);
 	}
@@ -205,26 +205,26 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	
 	
 	@Override
-	@Transactional
+	
 	public PatQuestionsModel addQstDtlsService(PatQuestionsModel patQuestionsModel) {
 		return patQuestionsRepo.save(patQuestionsModel);
 	}
 	
 	@Override
-	@Transactional
+	
 	public PatQuestionsModel updateQstDtlsService(PatQuestionsModel patQuestionsModel) {
 		return patQuestionsRepo.save(patQuestionsModel);
 	}
 	
 	@Override
-	@Transactional
+	
 	public int deleteQstDtlsService(PatQuestionsModel patQuestionsModel) {
 		return patQuestionsRepo.deleteByPatMedId(patQuestionsModel.getQuestionId());
 	}
 	
 	
 	@Override
-	@Transactional
+	
 	public List<PatQuestionsModel>  randomQstDtlsService() {
 		List<PatQuestionsModel> qstList = null;
 		int count = patQuestionsRepo.randomQstDtlsServiceCount();
@@ -290,7 +290,7 @@ public class HealthWorkerServiceImpl implements HealthWorkerService {
 	
 	
 	@Override
-	@Transactional
+	
 	public int updateFCMService(String fcmKey, UserMasterModel userId) {
 System.out.println("fcmKey::"+ fcmKey);
 		return userChildRepo.updateFCMToken(fcmKey, userId);
